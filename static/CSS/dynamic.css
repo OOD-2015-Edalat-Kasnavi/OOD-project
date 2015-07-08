@@ -1,0 +1,17 @@
+/*table.table-form {*/
+	/*margin-top: 50px;*/
+	/*margin-right: 50px;*/
+/*}*/
+
+/*table.table-form td, table.table-form th{*/
+	/*margin: 10px*/
+/*}*/
+/*table.table-form th{*/
+	/*margin-left: 20px*/
+/*}*/
+.form-container{
+	margin-top: 40px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+}

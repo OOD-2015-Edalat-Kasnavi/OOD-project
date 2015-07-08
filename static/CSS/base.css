@@ -2,6 +2,24 @@
 /*   light-blue: rgb( 51,181,229) */
 /*    dark-blue: rgb(  0,153,204) */
 
+html{
+	height: 100%;
+}
+body {
+	min-height: 100%;
+}
+#content-holder{
+	width: 100%;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-bottom: 15px;
+	height: 100vh;
+	background-color: rgb(138,213,240);
+	/*display:block;overflow:auto*/
+}
+.center-element{
+	text-align: center;
+}
 #navbar-inner .dropdown-menu{
 	text-align: right;
 }

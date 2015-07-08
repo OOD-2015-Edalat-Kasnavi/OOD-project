@@ -1,5 +1,4 @@
 
-<body dir="rtl">
 
 <nav id="navbar"  class="navbar navbar-default navbar-fixed-top" >
 	<div class="navbar-header">
@@ -18,28 +17,42 @@
 				<ul role="menu" class="dropdown-menu">
 
 					<li><a href="">تغییر رمز</a></li>
-					<li><a href="">خروج</a></li>
+					<li><a href={% url 'logout' %}>خروج</a></li>
 				</ul>
 			</li>
-			<li class="navbar-right dropdown">
-				<a data-toggle="dropdown" class="dropdown-toggle" href="#">مدیریت کاربران<b class="caret"></b> </a>
-				<ul role="menu" class="dropdown-menu">
-					<li><a href="">ثبت نام کاربر</a></li>
-					<li><a href="">اخراج کاربر</a></li>
-					<li><a href="">بررسی درخواست ویژه</a></li>
-				</ul>
-			</li>
+			{% if show_user_nav %}
+				<li class="navbar-right dropdown">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">درخواست ها<b class="caret"></b> </a>
+					<ul role="menu" class="dropdown-menu">
+						<li><a href="">درخواست ویژه</a></li>
+					</ul>
+				</li>
+			{% endif %}
+			{% if show_manager_nav %}
+				<li class="navbar-right dropdown">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">مدیریت کاربران<b class="caret"></b> </a>
+					<ul role="menu" class="dropdown-menu">
+						<li><a href="">ثبت نام کاربر</a></li>
+						<li><a href="">اخراج کاربر</a></li>
+						<li><a href="">بررسی درخواست ویژه</a></li>
+					</ul>
+				</li>
+			{% endif %}
 			<li class="navbar-right dropdown">
 				<a data-toggle="dropdown" class="dropdown-toggle" href="#">دانش<b class="caret"></b> </a>
 				<ul role="menu" class="dropdown-menu">
 					<li><a href="">افزودن دانش</a></li>
+					<li><a href={% url 'add-source' %}>افزودن منبع</a></li>
 					<li><a href="">ایجاد برچسب</a></li>
 					<li><a href="">حذف برچسب</a></li>
-					<li role="presentation" class="divider"></li>
-					<li><a href="">ایجاد رابطه میان دانشی</a></li>
-					<li><a href="">بررسی استفاده نادرست</a></li>
+					{% if show_manager_nav %}
+						<li role="presentation" class="divider"></li>
+						<li><a href="">ایجاد رابطه میان دانشی</a></li>
+						<li><a href="">بررسی استفاده نادرست</a></li>
+					{% endif %}
 				</ul>
 			</li>
+			{% if show_manager_nav %}
 			<li class="navbar-right dropdown">
 				<a data-toggle="dropdown" class="dropdown-toggle" href="#">گزارش<b class="caret"></b> </a>
 				<ul role="menu" class="dropdown-menu">
@@ -50,6 +63,7 @@
 					<li><a href="">گزارش فعالیت کارمندان</a></li>
 				</ul>
 			</li>
+			{% endif %}
 		</ul>
 		<form  id="navbar-search-form" role="search" class="navbar-form navbar-right ">
 

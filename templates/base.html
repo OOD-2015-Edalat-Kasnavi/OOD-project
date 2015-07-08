@@ -9,15 +9,21 @@
 	<link rel="stylesheet" href={% static "CSS/bootstrap-theme.min.css" %}>
 	<link rel="stylesheet" href={% static "CSS/base.css"%}>
 	<link rel="stylesheet" href={% static "CSS/generated.css"%}>
+	<link rel="stylesheet" href={% static "CSS/dynamic.css"%}>
 
 
 </head>
 
-	{% if show_user_nav %} {% include 'user-base.html' %}{% endif %}
-	{% if show_manager_nav %} {% include 'manager-base.html' %}{% endif %}
+<body dir="rtl">
 
-	<script src={% static "js/jquery-2.1.4.min.js"%}></script>
-	<script src={% static "js/bootstrap.min.js"%}></script>
-	<script src={% static "js/base.js"%}></script>
+	{% include 'base-nav.html' %}
+	<div id="content-holder">
+		{% block content %}
+		{% endblock %}
+	</div>
+
+<script src={% static "js/jquery-2.1.4.min.js"%}></script>
+<script src={% static "js/bootstrap.min.js"%}></script>
+<script src={% static "js/base.js"%}></script>
 </body>
 </html>

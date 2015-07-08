@@ -27,13 +27,16 @@ class Manager(KUser):
 		return 'Manager: ' + self.user.username
 
 
-def getKnowledgeUser(user):
-	print(user)
-	if type(user) is AnonymousUser:
+def getKnowledgeUser(usr):
+	if isinstance(usr, AnonymousUser):
 		return None
-	print(KUser.objects.filter(user=user).exists())
-	if KUser.objects.filter(user=user).exists():
-		return KUser.objects.get(user=user)
-	if Manager.objects.filter(user=user).exists():
-		return Manager.objects.get(user=user)
+
+	if Manager.objects.filter(user__pk=usr.pk):
+		return Manager.objects.get(user__pk=usr.pk)
+
+	if KUser.objects.filter(user__pk=usr.pk):
+		return KUser.objects.get(user__pk=usr.pk)
+
 	return None
+
+
