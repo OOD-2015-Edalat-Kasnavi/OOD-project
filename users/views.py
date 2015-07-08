@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 def loginView(request):
 	if request.method == 'GET':
-		return render(request, 'login.html', {})
+		return render(request, 'user/login.html', {})
 
 	user = authenticate(username=request.POST['username'], password=request.POST['password'])
 	if user is not None:
@@ -18,7 +18,7 @@ def loginView(request):
 			baseUrl = urlReverse('base-view')
 			nextUrl = request.GET.get('next', baseUrl)
 			print('login user: ' + str(user) + ' redirect to ' + nextUrl)
-			return HttpResponseRedirect( nextUrl)
+			return HttpResponseRedirect(nextUrl)
 
 		else:
 			# print("The password is valid, but the account has been disabled!")
@@ -34,14 +34,23 @@ def loginView(request):
 		})
 
 
-# @login_required()
+@login_required()
 def baseView(request):
-	print('show base for :')
-	userType = ''
-	if type(request.user) is users.models.User:
-		userType = 'user'
-	if type(request.user) is users.models.Manager:
-		userType = 'manager'
-	return render(request, userType+'-base.html', {
+	print('---- base view')
+	user = users.models.getKnowledgeUser(request.user)
+	print('show base for: ' + str(user) + ' realName:' + user.realName)
+
+	showUserNav = False
+	showManagerNav = False
+	if type(user) is users.models.KUser:
+		showUserNav = True
+	if type(user) is users.models.Manager:
+		showManagerNav = True
+		showUserNav = False
+
+	return render(request, 'base.html', {
+		'user_realname':user.realName,
+		'show_user_nav':showUserNav,
+		'show_manager_nav':showManagerNav
 	})
 

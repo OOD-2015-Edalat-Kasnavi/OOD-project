@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 
@@ -7,7 +9,7 @@ class Knowledge(models.Model):
 	description = models.TextField()
 	gainWay = models.TextField()
 	access = models.IntegerField()
-	createDate = models.DateTimeField()
+	createDate = models.DateTimeField(default=datetime.now)
 
 
 class TextKnowledge(Knowledge):
@@ -27,7 +29,7 @@ class FileKnowledge(Knowledge):
 class Source(models.Model):
 	subject = models.CharField(max_length=255)
 	description = models.TextField()
-	createDate = models.DateTimeField()
+	createDate = models.DateTimeField(default=datetime.now)
 
 	def __str__(self):
 		return 'Source: ' + self.subject

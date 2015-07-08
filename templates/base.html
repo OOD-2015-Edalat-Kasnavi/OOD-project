@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% load static %}
+	<meta charset="utf-8">
+	<title>TimeLine</title>
+
+	<link rel="stylesheet" href={% static "CSS/bootstrap.min.css"%}>
+	<link rel="stylesheet" href={% static "CSS/bootstrap-theme.min.css" %}>
+	<link rel="stylesheet" href={% static "CSS/base.css"%}>
+	<link rel="stylesheet" href={% static "CSS/generated.css"%}>
+
+
+</head>
+
+	{% if show_user_nav %} {% include 'user-base.html' %}{% endif %}
+	{% if show_manager_nav %} {% include 'manager-base.html' %}{% endif %}
+
+	<script src={% static "js/jquery-2.1.4.min.js"%}></script>
+	<script src={% static "js/bootstrap.min.js"%}></script>
+	<script src={% static "js/base.js"%}></script>
+</body>
+</html>
