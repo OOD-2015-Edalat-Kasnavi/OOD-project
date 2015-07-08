@@ -1,14 +1,19 @@
 from datetime import datetime
+from users.models import KUser
 
 from django.db import models
 
 
+defaultAccessForKnowledge = 50
+
 class Knowledge(models.Model):
-	subject = models.CharField(max_length=255   )
-	summary = models.TextField()
-	description = models.TextField()
-	gainWay = models.TextField()
-	access = models.IntegerField()
+	subject = models.CharField(max_length=255)
+	source = models.ForeignKey('Source')
+	author = models.ForeignKey('users.KUser')
+	summary = models.CharField(max_length=255, blank=True, null=True)
+	description = models.TextField(blank=True, null=True)
+	gainWay = models.TextField(blank=True, null=True)
+	access = models.IntegerField(default=defaultAccessForKnowledge)
 	createDate = models.DateTimeField(default=datetime.now)
 
 

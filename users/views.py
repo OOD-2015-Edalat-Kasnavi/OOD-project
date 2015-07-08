@@ -24,13 +24,13 @@ def loginView(request):
 
 		else:
 			# print("The password is valid, but the account has been disabled!")
-			return render(request, 'login.html', {
+			return render(request, 'user/login.html', {
 				'invalidLogin': True,
 				'errorMessage': 'Account has been deactivated.'
 			})
 	else:
 		# the authentication system was unable to verify the username and password
-		return render(request, 'login.html', {
+		return render(request, 'user/login.html', {
 			'invalidLogin': True,
 			'errorMessage': 'Invalid username or password.'
 		})
@@ -41,11 +41,9 @@ def logoutAj(request):
 	return HttpResponseRedirect(urlReverse('login'))
 
 
-@login_required()
-def baseView(request):
-	print('---- base view')
+def addBaseViewContext(request, context):
 	user = users.models.getKnowledgeUser(request.user)
-	print('show base for: ' + str(user) + ' realName:' + user.realName)
+	print('---- base context data for ' + str(user))
 
 	showUserNav = False
 	showManagerNav = False
@@ -55,9 +53,18 @@ def baseView(request):
 		showManagerNav = True
 		showUserNav = False
 
-	return render(request, 'base.html', {
-		'user_realname':user.realName,
-		'show_user_nav':showUserNav,
-		'show_manager_nav':showManagerNav
-	})
+	context['user_realname'] = user.realName
+	context['show_user_nav'] = showUserNav
+	context['show_manager_nav'] = showManagerNav
+	return context
+
+
+
+@login_required()
+def baseView(request):
+	print('---- base view')
+	
+	return render(request, 'base.html', addBaseViewContext(request, {
+
+		}) )
 

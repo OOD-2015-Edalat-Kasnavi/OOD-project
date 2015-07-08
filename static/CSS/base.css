@@ -5,18 +5,7 @@
 html{
 	height: 100%;
 }
-body {
-	min-height: 100%;
-}
-#content-holder{
-	width: 100%;
-	padding-left: 15px;
-	padding-right: 15px;
-	padding-bottom: 15px;
-	height: 100vh;
-	background-color: rgb(138,213,240);
-	/*display:block;overflow:auto*/
-}
+
 .center-element{
 	text-align: center;
 }
@@ -28,7 +17,9 @@ body {
 }
 body{
     padding-top: 50px;
-	background-color: #f1f1f1;
+	min-height: 100%;
+	/*background-color: #f1f1f1;*/
+	background-color: rgb(138,213,240);
 }
 .add-simple-padding{
 	padding: 10px 15px 10px 15px;

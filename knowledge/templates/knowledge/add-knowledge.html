@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+	<form method="post" action="">
+
+		<div class="form-container">
+			<!-- subject -->
+			<p><label for="{{ form.subject.id_for_label }}">{{ form.subject.label }}</label></p>
+			<p>{{ form.subject|add_class:'form-input' }}</p>
+			<div class="form-error">{{ form.subject.errors }}</div>
+
+			<!-- source -->
+			<p><label for="{{ form.source.id_for_label }}">{{ form.source.label }}</label></p>
+			<p>{{ form.source|add_class:'form-input' }}</p>
+			<div class="form-error">{{ form.source.errors }}</div>
+
+			<!-- summary -->
+			<p><label for="{{ form.summary.id_for_label }}">{{ form.summary.label }}</label></p>
+			<p>{{ form.summary|add_class:'form-input' }}</p>
+			<div class="form-error">{{ form.summary.errors }}</div>
+
+			<!-- description -->
+			<p><label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label></p>
+			<p>{{ form.description|add_class:'form-input' }}</textarea></p>
+			<div class="form-error">{{ form.description.errors }}</div>
+
+			<!-- gainWay -->
+			<p><label for="{{ form.gainWay.id_for_label }}">{{ form.gainWay.label }}</label></p>
+			<p>{{ form.gainWay|add_class:'form-input' }}</p>
+			<div class="form-error">{{ form.gainWay.errors }}</div>
+
+			<!-- access -->
+			<p><label for="{{ form.access.id_for_label }}">{{ form.access.label }}</label></p>
+			<p>{{ form.access|add_class:'form-input' }}</p>
+			<div class="form-error">{{ form.access.errors }}</div>
+
+			{% if success %}
+				<div class="form-success">منبع با موفقیت ثبت شد.</div>
+			{% endif %}
+			<p class=""><input type='submit' class="btn btn-info"></p>
+		</div>
+		
+
+
+	</form>
+{% endblock %}

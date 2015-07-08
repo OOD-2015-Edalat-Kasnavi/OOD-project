@@ -1,17 +1,79 @@
-/*table.table-form {*/
-	/*margin-top: 50px;*/
-	/*margin-right: 50px;*/
-/*}*/
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+table.table-form {
+	margin-top: 50px;
+	margin-right: 50px;
+	text-align: right;
+}
+table.table-form *{
+	text-align: right;
+}
 
-/*table.table-form td, table.table-form th{*/
-	/*margin: 10px*/
-/*}*/
-/*table.table-form th{*/
-	/*margin-left: 20px*/
-/*}*/
+
+table.table-form td, table.table-form th{
+	margin: 10px;
+	padding: 10px;
+}
+table.table-form th{
+	margin-left: 20px
+}
 .form-container{
 	margin-top: 40px;
 	margin-left: auto;
 	margin-right: auto;
 	width: 90%;
+}
+
+
+
+/*#content-holder{
+	width: 100%;
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-bottom: 15px;
+	height: 100vh;
+	background-color: rgb(138,213,240);
+	display:block;overflow:auto
+}*/
+
+input.form-input, textarea.form-input, select.form-input {
+	padding: 16px;
+	border-radius:7px;
+	border:0px;
+	background: rgba(255,255,255,.2);
+	display: block;
+	margin: 15px;
+	width: 500px;
+	color:white;
+	font-size:18px;
+	
+}
+
+input.form-input, select.form-input {
+	height: 54px;
+}
+
+
+input.form-input:focus, textarea.form-input:focus , select.form-input:focus {
+	outline-color: rgba(0,0,0,0);
+	background: rgba(255,255,255,.95);
+	color: #33b5e5;
+}
+
+input.form-input::-webkit-input-placeholder, textarea.form-input::-webkit-textarea-placeholder 
+, select.form-input::-webkit-input-placeholder{
+	color: white;
+}
+
+input.form-input:focus::-webkit-input-placeholder, textarea.form-input:focus::-webkit-textarea-placeholder 
+, select.form-input:focus::-webkit-input-placeholder{
+	color: #33b5e5;
+}
+
+.form-error{
+	color: red;
+	font-family: 'Roboto', sans-serif;
+}
+.form-success{
+	color: green;
+	font-family: 'Roboto', sans-serif;
 }

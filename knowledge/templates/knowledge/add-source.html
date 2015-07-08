@@ -1,8 +1,33 @@
 {% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
 {% block content %}
 	<form method="post" action="">
+		<!-- <table class="table-form" dir="rtl"> -->
+			<!-- {{ addSourceForm.as_table}} -->
+			<!-- <tr class="center-element">
+				<input type='submit' class="btn btn-info">
+			</tr> -->
+		<!-- </table> -->
+<!-- <input type='submit' class="btn btn-info"> -->
 
 		<div class="form-container">
+			<p><label for="id_subject">موضوع</label></p>
+			<p>{{ form.subject|add_class:'form-input' }}</p>
+			<div class="form-error">{{ form.subject.errors }}</div>
+			<p><label for="id_description">شرح</label></p>
+			<p>{{ form.description|add_class:'form-input' }}</textarea></p>
+			<div class="form-error">{{ form.description.errors }}</div>
+			<!-- <div class="form-error">{{ addSourceForm.errors }}</div> -->
+			{% if success %}
+				<div class="form-success">منبع با موفقیت ثبت شد.</div>
+			{% endif %}
+			<p class=""><input type='submit' class="btn btn-info"></p>
+		</div>
+		
+
+		<!-- <div class="form-container">
 			<p><label for="id_subject">موضوع</label></p>
 			<p><input id="id_subject" class="form-control" maxlength="255" name="subject" type="text"></p>
 			<p>{{ addSourceForm.error }}</p>
@@ -10,7 +35,7 @@
 			<p><textarea cols="40" id="id_description" class="form-control" name="description" rows="10"></textarea></p>
 			<p>{{ addSourceForm.error }}</p>
 			<p class="center-element"><input type='submit' class="btn btn-info"></p>
-		</div>
+		</div> -->
 
 {#		<div class="form-group">#}
 {#			<label for="id_subject">موضوع</label>#}
