@@ -6,7 +6,7 @@ from django.forms import ModelForm
 
 def convertFormErrorToFarsi(form):
 	for field in form.fields.values():
-		field.error_messages = {'required':('پر کردن ' + '{fieldname}' + ' ضروری است.').
+		field.error_messages = {'required':('پر کردن ' + '"{fieldname}"' + ' ضروری است.').
 		format(fieldname=field.label),
 		'invalid':('اطلاعات ' + '{fieldname}' + 'صحیح نیست.').format(fieldname=field.label),
 		}
@@ -23,6 +23,23 @@ class SourceForm(ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		super(SourceForm, self).__init__(*args, **kwargs)
+
+		# if you want to do it to all of them
+		convertFormErrorToFarsi(self)
+
+
+class InterKnowledgeRelationshipForm(ModelForm):
+	class Meta:
+		model = knowledge.models.InterknowledgeRelationship
+		fields = ['ktype', 'fromKnowledge', 'toKnowledge']
+		labels = {
+			'ktype': 'نوع',
+			'fromKnowledge': 'از',
+			'toKnowledge': 'به'
+		}
+
+	def __init__(self, *args, **kwargs):
+		super(InterKnowledgeRelationshipForm, self).__init__(*args, **kwargs)
 
 		# if you want to do it to all of them
 		convertFormErrorToFarsi(self)

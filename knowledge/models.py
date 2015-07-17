@@ -51,7 +51,7 @@ class TagType(models.Model):
 
 
 class Tag(models.Model):
-	type = models.ForeignKey('TagType', related_name='tags')
+	ktype = models.ForeignKey('TagType', related_name='tags')
 	knowledge = models.ForeignKey('Knowledge')
 
 	def __str__(self):
@@ -68,7 +68,7 @@ class InterknowledgeRelationshipType(models.Model):
 
 
 class InterknowledgeRelationship(models.Model):
-	type = models.ForeignKey('InterknowledgeRelationshipType', related_name='relations')
+	ktype = models.ForeignKey('InterknowledgeRelationshipType', related_name='relations')
 	fromKnowledge = models.ForeignKey('Knowledge', related_name='relationToKnowledge')
 	toKnowledge = models.ForeignKey('Knowledge', related_name='relationFromKnowledge')
 

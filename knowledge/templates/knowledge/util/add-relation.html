@@ -1,0 +1,58 @@
+{% load widget_tweaks %}
+
+
+<!-- Modal -->
+<div class="modal fade" id="add-relation" tabindex="-1" role="dialog" aria-labelledby="add-relationLabel" >
+	<div class="modal-dialog" role="document" >
+		<div class="modal-content" >
+			<form method="post" {% if not add_relation_response %}action="add-relation/"{% endif %}>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+
+					<h4 class="modal-title" id="add-relationLabel">افزودن رابطه</h4>
+				</div>
+				<div class="modal-body">
+					<!-- form -->
+
+
+
+					<div class="form-container">
+						<!-- ktype -->
+						<p><label for="{{ add_relation_form.ktype.id_for_label }}">{{ add_relation_form.ktype.label }}</label></p>
+						<p>{{ add_relation_form.ktype|add_class:'form-input' }}</p>
+						<div class="form-error">{{ add_relation_form.ktype.errors }}</div>
+
+						<!-- fromKnowledge -->
+						<p><label for="{{ add_relation_form.fromKnowledge.id_for_label }}">{{ add_relation_form.fromKnowledge.label }}</label></p>
+						<p>{{ add_relation_form.fromKnowledge|add_class:'form-input' }}</p>
+						<div class="form-error">{{ add_relation_form.fromKnowledge.errors }}</div>
+
+						<!-- toKnowledge -->
+						<p><label for="{{ add_relation_form.toKnowledge.id_for_label }}">{{ add_relation_form.toKnowledge.label }}</label></p>
+						<p>{{ add_relation_form.toKnowledge|add_class:'form-input' }}</p>
+						<div class="form-error">{{ add_relation_form.toKnowledge.errors }}</div>
+
+						{% if success %}
+							<div class="form-success">رابطه با موفقیت ثبت شد.</div>
+						{% endif %}
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<input type='submit' class="btn btn-info">
+{#					<button type="button" class="btn btn-primary">Save</button>#}
+				</div>
+
+			</form>
+		</div>
+	</div>
+</div>
+{% if add_relation_response %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		console.log('start modal');
+		$('#add-relation').modal('show')
+	})
+</script>
+{% endif %}

@@ -91,6 +91,9 @@ input.form-input:focus::-webkit-input-placeholder, textarea.form-input:focus::-w
 	margin-right: auto;
 	text-align: center;
 }
+.modal-content{
+	background-color: rgb(138,213,240)
+}
 
 .single-knowledge{
 	width: 95%;
