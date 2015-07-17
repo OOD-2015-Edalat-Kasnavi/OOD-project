@@ -41,21 +41,12 @@ def logoutAj(request):
 	return HttpResponseRedirect(urlReverse('login'))
 
 
-def addBaseViewContext(request, context):
+def addUserInfoContext(request, context):
 	user = users.models.getKnowledgeUser(request.user)
 	print('---- base context data for ' + str(user))
 
-	showUserNav = False
-	showManagerNav = False
-	if type(user) is users.models.KUser:
-		showUserNav = True
-	if type(user) is users.models.Manager:
-		showManagerNav = True
-		showUserNav = False
-
 	context['user_realname'] = user.realName
-	context['show_user_nav'] = showUserNav
-	context['show_manager_nav'] = showManagerNav
+	context['user_is_manager'] = user.isManager
 	return context
 
 
@@ -64,7 +55,7 @@ def addBaseViewContext(request, context):
 def baseView(request):
 	print('---- base view')
 	
-	return render(request, 'base.html', addBaseViewContext(request, {
+	return render(request, 'base.html', addUserInfoContext(request, {
 
 		}) )
 

@@ -9,16 +9,15 @@ defaultAccessForKnowledge = 50
 ###################  knowledge  ###################
 class Knowledge(models.Model):
 	subject = models.CharField(max_length=255)
-	source = models.ForeignKey('Source')
-	author = models.ForeignKey('users.KUser')
+	source = models.ForeignKey('Source', related_name='knowledge')
+	author = models.ForeignKey('users.KUser', related_name='knowledge')
 	summary = models.CharField(max_length=255, blank=True, null=True)
-	description = models.TextField(blank=True, null=True)
 	gainWay = models.TextField(blank=True, null=True)
 	access = models.IntegerField(default=defaultAccessForKnowledge)
 	createDate = models.DateTimeField(default=datetime.now)
 
-	content = models.TextField()
-	file = models.FileField()
+	content = models.TextField(blank=True, null=True)
+	file = models.FileField(blank=True, null=True)
 
 	def __str__(self):
 		return 'Knowledge: ' + self.subject
@@ -52,7 +51,7 @@ class TagType(models.Model):
 
 
 class Tag(models.Model):
-	type = models.ForeignKey('TagType')
+	type = models.ForeignKey('TagType', related_name='tags')
 	knowledge = models.ForeignKey('Knowledge')
 
 	def __str__(self):
@@ -69,9 +68,9 @@ class InterknowledgeRelationshipType(models.Model):
 
 
 class InterknowledgeRelationship(models.Model):
-	type = models.ForeignKey('InterknowledgeRelationshipType')
-	fromKnowledge = models.ForeignKey('Knowledge')
-	toKnowledge = models.ForeignKey('Knowledge')
+	type = models.ForeignKey('InterknowledgeRelationshipType', related_name='relations')
+	fromKnowledge = models.ForeignKey('Knowledge', related_name='relationToKnowledge')
+	toKnowledge = models.ForeignKey('Knowledge', related_name='relationFromKnowledge')
 
 	def __str__(self):
 		return 'InterknowledgeRelationship: (' +self.type.name + '( '\
@@ -81,8 +80,8 @@ class InterknowledgeRelationship(models.Model):
 
 ###################  comment  ###################
 class Comment(models.Model):
-	author = models.ForeignKey('users.KUser')
-	knowledge = models.ForeignKey('Knowledge')
+	author = models.ForeignKey('users.KUser', related_name='comments')
+	knowledge = models.ForeignKey('Knowledge', related_name='comments')
 	text = models.TextField()
 	date = models.DateTimeField(default=datetime.now)
 
@@ -91,22 +90,22 @@ class Comment(models.Model):
 
 
 class KnowledgeUsage(models.Model):
-	projectProces = models.ForeignKey('ProjectProces')
+	projectProces = models.ForeignKey('ProjectProces', related_name='usedIn')
 
 	def __str__(self):
 		return 'knowledge use: ' + self.author.user.username + ' used ' + self.knowledge.subject + ' in ' + self.projectProces.phase
 
 
 ###################  letter  ###################
-class Letter(models.Model):
-	subject = models.CharField(max_length=255)
-	sender = models.CharField(max_length=255)
-	reciver = models.CharField(max_length=255)
-	text = models.TextField()
-	date = models.DateTimeField()
+# class Letter(models.Model):
+# 	subject = models.CharField(max_length=255)
+# 	sender = models.CharField(max_length=255)
+# 	reciver = models.CharField(max_length=255)
+# 	text = models.TextField()
+# 	date = models.DateTimeField()
 
-	def __str__(self):
-		return 'letter: ' + self.subject + ' from ' + self.sender + ' to ' + self.reciver
+# 	def __str__(self):
+# 		return 'letter: ' + self.subject + ' from ' + self.sender + ' to ' + self.reciver
 
 
 

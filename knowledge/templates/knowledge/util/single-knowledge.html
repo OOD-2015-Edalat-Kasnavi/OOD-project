@@ -1,0 +1,60 @@
+<div class="single-knowledge">
+	<div class="subject">
+		<h1>{{ knowledge.subject }}</h1>
+	</div>
+
+	{% if knowledge.summary %}
+		<hr class='knowledge-part-divider'>
+		<div class="summary">
+			<h2>خلاصه :</h2>
+			<p>{{ knowledge.summary }}</p>
+		</div>
+	{% endif %}
+
+	{% if knowledge.content %}
+		<hr class='knowledge-part-divider'>
+		<div class="content">
+			<h2>محتوا:</h2>
+			<p>{{ knowledge.content }}</p>
+		</div>
+	{% endif %}
+
+	{% if knowledge.file %}
+		<hr class='knowledge-part-divider'>
+		<div class="files">
+			<h2>فایل ها:</h2>
+			<p>{{ knowledge.file }}</p>
+		</div>
+	{% endif %}
+
+
+	<hr class='knowledge-part-divider'>
+	<footer class="footer">
+		<div class="author triplet">نویسنده: <a href="">{{knowledge.author.realName}}</a></div>
+		<div class="source triplet">منبع: <a href="">{{knowledge.source.subject}}</a></div>
+		<div class="date triplet-base">تاریخ:{{knowledge.createDate}}</div>
+	</footer> 
+
+	<hr class='knowledge-part-divider'>
+	<div class="interact">
+		<div class="rate middle-wrap">
+			<a href="#" class="btn btn-sm btn-danger rate-down">
+				<span class="number">0</span>
+				<span class="glyphicon glyphicon-thumbs-down"></span>
+			</a>
+			<a href="#" class="btn btn-sm btn-success rate-up">
+				<span class="number">0</span>
+				<span class="glyphicon glyphicon-thumbs-up"></span>
+			</a>
+		</div>
+		<div class="input-group add-comment" dir="ltr">
+			<input type="text" placeholder="نظر..." class="form-control" dir="rtl">
+			<span class="input-group-btn">
+				<button class="btn btn-primary" type="button">
+					<i class="glyphicon glyphicon-send"></i>
+				</button>
+			 </span>
+		</div>
+	</div>
+	<div class="comments"></div>
+</div>

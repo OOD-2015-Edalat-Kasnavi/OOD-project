@@ -77,3 +77,56 @@ input.form-input:focus::-webkit-input-placeholder, textarea.form-input:focus::-w
 	color: green;
 	font-family: 'Roboto', sans-serif;
 }
+
+.triplet{
+	float: right;
+	width: 33%;
+}
+.triplet-base{
+	margin-right: 66%;
+	width: 33%;
+}
+.middle-wrap{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.single-knowledge{
+	width: 95%;
+	background-color: rgba(255,255,255,.65);
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	padding: 5px 8px;
+	border-radius: 10px;
+}
+.single-knowledge hr{
+	margin-top: 8px;
+	margin-bottom: 8px;
+
+    border: 0;
+    height: 1px;
+    background: rgb(  0,153,204);
+
+}
+.single-knowledge h1{
+	font-family: 'Roboto', sans-serif;
+	font-size: 2em;
+	color: rgb(  0,153,204);
+
+}
+.single-knowledge h2{
+	font-family: 'Roboto', sans-serif;
+	font-size: 1.6em;
+	color: rgb(  0,153,204);
+}
+.single-knowledge .rate{
+	float: left;
+	width: 110px;
+
+}
+.single-knowledge .add-comment{
+	margin-left: calc(100%-115px);
+}

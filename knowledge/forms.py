@@ -32,12 +32,12 @@ class SourceForm(ModelForm):
 class KnowledgeForm(ModelForm):
 	class Meta:
 		model = knowledge.models.Knowledge
-		fields = ['subject', 'source', 'description', 'summary', 'gainWay', 'access']
+		fields = ['subject', 'source', 'content', 'summary', 'gainWay', 'access']
 		exclude = ['author']
 		labels = {
 			'subject': 'موضوع',
 			'source': 'منبع',
-			'description': 'شرح',
+			'content': 'محتوا',
 			'summary':'خلاصه',
 			'gainWay':'طریقه ی کسب',
 			'access':'دسترسی'

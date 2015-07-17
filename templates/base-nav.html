@@ -20,7 +20,7 @@
 					<li><a href={% url 'logout' %}>خروج</a></li>
 				</ul>
 			</li>
-			{% if show_user_nav %}
+			{% if not user_is_manager %}
 				<li class="navbar-right dropdown">
 					<a data-toggle="dropdown" class="dropdown-toggle" href="#">درخواست ها<b class="caret"></b> </a>
 					<ul role="menu" class="dropdown-menu">
@@ -28,7 +28,7 @@
 					</ul>
 				</li>
 			{% endif %}
-			{% if show_manager_nav %}
+			{% if user_is_manager %}
 				<li class="navbar-right dropdown">
 					<a data-toggle="dropdown" class="dropdown-toggle" href="#">مدیریت کاربران<b class="caret"></b> </a>
 					<ul role="menu" class="dropdown-menu">
@@ -45,14 +45,14 @@
 					<li><a href={% url 'add-source' %}>افزودن منبع</a></li>
 					<li><a href="">ایجاد برچسب</a></li>
 					<li><a href="">حذف برچسب</a></li>
-					{% if show_manager_nav %}
+					{% if user_is_manager %}
 						<li role="presentation" class="divider"></li>
 						<li><a href="">ایجاد رابطه میان دانشی</a></li>
 						<li><a href="">بررسی استفاده نادرست</a></li>
 					{% endif %}
 				</ul>
 			</li>
-			{% if show_manager_nav %}
+			{% if user_is_manager %}
 			<li class="navbar-right dropdown">
 				<a data-toggle="dropdown" class="dropdown-toggle" href="#">گزارش<b class="caret"></b> </a>
 				<ul role="menu" class="dropdown-menu">

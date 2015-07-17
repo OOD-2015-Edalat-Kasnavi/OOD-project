@@ -11,31 +11,23 @@ class KUser(models.Model):
 	job = models.CharField(max_length=255)
 	privilege = models.IntegerField()
 	employeeId = models.IntegerField(unique=True)
+	isManager = models.BooleanField(default=False)
 	state = models.IntegerField()
 
 	GENDER_CHOICES = (('M', 'Male'),('F', 'Female'),)
 	gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
 
-	def __str__(self):
-		return 'User: ' + self.user.username
-
-
-
-class Manager(KUser):
-	class Meta:
-		verbose_name = 'Manager'
-		verbose_name_plural = 'Managers'
+	
 
 	def __str__(self):
-		return 'Manager: ' + self.user.username
+		return ('Manager' if self.isManager else 'User') + ': ' + self.user.username
+
+
 
 
 def getKnowledgeUser(usr):
 	if isinstance(usr, AnonymousUser):
 		return None
-
-	if Manager.objects.filter(user__pk=usr.pk):
-		return Manager.objects.get(user__pk=usr.pk)
 
 	if KUser.objects.filter(user__pk=usr.pk):
 		return KUser.objects.get(user__pk=usr.pk)
