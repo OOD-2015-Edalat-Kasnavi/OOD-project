@@ -17,10 +17,30 @@ class KUser(models.Model):
 	GENDER_CHOICES = (('M', 'Male'),('F', 'Female'),)
 	gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
 
-	
+	def presentation(self):
+		return self.user.username
 
 	def __str__(self):
 		return ('Manager' if self.isManager else 'User') + ': ' + self.user.username
+
+	def changeJob(self, newJob):
+		self.job = newJob
+		self.save()
+
+	def fire(self):
+		pass
+
+	def emailPassword(self):
+		pass
+
+	def changePassword(self):
+		pass
+
+	def checkPass(self, password):
+		user = authenticate(username=self.username, password=password)
+		if user is not None:
+			return True
+		return False
 
 
 

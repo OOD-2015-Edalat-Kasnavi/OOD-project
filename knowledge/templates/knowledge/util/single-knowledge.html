@@ -37,8 +37,39 @@
 
 
 	<hr class='knowledge-part-divider'>
-	<div class="control-panel">
+	<div class="control-panel-relation">
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-relation">افزودن رابطه</button>
+		{% for rel in knowledge.relationFromKnowledge.all %}
+			<div class='btn-group'>
+				<!-- todo add  link -->
+				<a class='btn btn-success'>{{ rel.fromKnowledge.presentation }}</a>
+				<a class='btn btn-success'>{{ rel.ktype.presentation }}</a>
+				<a class='btn btn-success'><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+			</div>
+		{% endfor %}
+
+		{% for rel in knowledge.relationToKnowledge.all %}
+			<div class='btn-group'>
+				<!-- todo add  link -->
+				<a class='btn btn-warning'>{{ rel.toKnowledge.presentation }}</a>
+				<a class='btn btn-warning'>{{ rel.ktype.presentation }}</a>
+				<a class='btn btn-warning'><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+			</div>
+		{% endfor %}
+
+		<!-- <button class="btn btn-primary"></button> -->
+	</div>
+	<hr class='knowledge-part-divider'>
+	<div class="control-panel-tag">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-tag">افزودن تگ</button>
+		
+		{% for tag in knowledge.tags.all %}
+			<div class='btn-group'>
+				<!-- todo add  link -->
+				<a class='btn btn-info'>{{ tags.ktype.presentation }}</a>
+				<a class='btn btn-info'><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+			</div>
+		{% endfor %}
 		<!-- <button class="btn btn-primary"></button> -->
 	</div>
 

@@ -22,6 +22,16 @@ class Knowledge(models.Model):
 	def __str__(self):
 		return 'Knowledge: ' + self.subject
 
+	def presentation(self):
+		return self.subject
+
+class Rate(models.Model):
+	up = models.BooleanField(default=True)
+	voter = models.ForeignKey('users.KUser', related_name='rates')
+	knowledge = models.ForeignKey('Knowledge', related_name='rates')
+
+	def __str__(self):
+		return str(knowledge) + ' vote ' + ('up' if up else 'down') + ' by ' + str(voter)
 
 ###################  Source  ###################
 class Source(models.Model):
@@ -31,6 +41,9 @@ class Source(models.Model):
 
 	def __str__(self):
 		return 'Source: ' + self.subject
+
+	def presentation(self):
+		return self.subject
 
 
 class ProjectProces(Source):
@@ -49,6 +62,9 @@ class TagType(models.Model):
 	def __str__(self):
 		return 'TagType: ' + self.name
 
+	def presentation(self):
+		return self.name
+
 
 class Tag(models.Model):
 	ktype = models.ForeignKey('TagType', related_name='tags')
@@ -65,6 +81,10 @@ class InterknowledgeRelationshipType(models.Model):
 
 	def __str__(self):
 		return 'RelationshipType: ' + self.name
+
+	
+	def presentation(self):
+		return self.name
 
 
 class InterknowledgeRelationship(models.Model):

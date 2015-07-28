@@ -3,6 +3,7 @@ import knowledge.models
 from users.views import addUserInfoContext
 
 from django.http import Http404
+from django.contrib.auth import authenticate
 from django.shortcuts import render, get_object_or_404
 from knowledge.forms import SourceForm, KnowledgeForm, InterKnowledgeRelationshipForm
 
