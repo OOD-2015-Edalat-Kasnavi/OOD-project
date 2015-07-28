@@ -5,7 +5,7 @@
 <div class="modal fade" id="add-relation" tabindex="-1" role="dialog" aria-labelledby="add-relationLabel" >
 	<div class="modal-dialog" role="document" >
 		<div class="modal-content" >
-			<form method="post" {% if not add_relation_response %}action="add-relation/"{% endif %}>
+			<form id='add-relation-form'>
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
 
@@ -40,19 +40,45 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<input type='submit' class="btn btn-info">
+					<input id='add-relation-submit' type='submit' class="btn btn-info">
 {#					<button type="button" class="btn btn-primary">Save</button>#}
 				</div>
 
 			</form>
 		</div>
 	</div>
+
 </div>
-{% if add_relation_response %}
+
 <script type="text/javascript">
-	$(document).ready(function(){
-		console.log('start modal');
-		$('#add-relation').modal('show')
-	})
+	var $form = $('#add-relation-form');
+	function rewrite_add_relation_form(data){
+		console.log('rewrite relation');
+		// console.log(data);
+		var $res = $(data);
+		var $change = $res.find('#add-relation-form');
+		console.log('^^^^^^^^^^^^^^^^^^^^^');
+		console.log($change.html());
+		$form.html($change.html());
+		add_submit_event_listener();
+	}
+	function add_submit_event_listener(){
+		$('#add-relation-submit').on('click', function(event){
+			event.preventDefault();
+			console.log('submiting add-relation form');
+			$.ajax({type:'POST',
+				url: 'add-relation/',
+				data: $form.serialize(),
+				success: function(data){
+					rewrite_add_relation_form(data);
+				},
+				error: function(data){
+					rewrite_add_relation_form(data);
+				}
+			});
+			console.log('form submited');
+			return false;
+		});
+	}
+	add_submit_event_listener();
 </script>
-{% endif %}

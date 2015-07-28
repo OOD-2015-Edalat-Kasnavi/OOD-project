@@ -86,7 +86,7 @@ def addRelationAJ(request, knowledge_id):
 	else :
 		print('---- invalid form')
 
-	return render(request, 'knowledge/show-knowledge.html', addUserInfoContext(request, {
+	return render(request, 'knowledge/util/add-relation.html', addUserInfoContext(request, {
 		'knowledge':kn,
 		'success': success,
 		'add_relation_response' : True,
