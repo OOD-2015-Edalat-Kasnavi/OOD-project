@@ -1,11 +1,13 @@
 import users.models
 import knowledge.models
 from users.views import addUserInfoContext
+from knowledge.factory import KnowledgeHtmlFactory
 
-from django.http import Http404
-from django.contrib.auth import authenticate
+from django.http import Http404, JsonResponse
+from django.template.loader import render_to_string
+from django.template import Template, Context, loader
 from django.shortcuts import render, get_object_or_404
-from knowledge.forms import SourceForm, KnowledgeForm, InterKnowledgeRelationshipForm
+from knowledge.forms import SourceForm, KnowledgeForm, InterKnowledgeRelationshipForm, TagForm
 
 # Create your views here.
 
@@ -61,12 +63,13 @@ def showAddKnowledge(request):
 def showKnowledge(request, knowledge_id):
 	kn = get_object_or_404(knowledge.models.Knowledge, pk=knowledge_id)
 	add_relation_form = InterKnowledgeRelationshipForm()
+	add_tag_form = TagForm()
 	print('show knowledge:')
 	print(kn)
 	return render(request, 'knowledge/show-knowledge.html', addUserInfoContext(request, {
 		'knowledge':kn,
-		'add_relation_response': False,
-		'add_relation_form': add_relation_form
+		'add_relation_form': add_relation_form,
+		'add_tag_form': add_tag_form
 	}))
 
 
@@ -77,21 +80,71 @@ def addRelationAJ(request, knowledge_id):
 	kn = get_object_or_404(knowledge.models.Knowledge, pk=knowledge_id)
 	add_relation_form = InterKnowledgeRelationshipForm(request.POST)
 
+	relation = None
 	success = False
 	print('---- validating form')
+
 	if add_relation_form.is_valid():
 		print('---- valid form')
-		add_relation_form.save()
+		relation = add_relation_form.save()
 		success = True
 	else :
 		print('---- invalid form')
 
-	return render(request, 'knowledge/util/add-relation.html', addUserInfoContext(request, {
-		'knowledge':kn,
+	context = {
+		'knowledge': kn,
 		'success': success,
-		'add_relation_response' : True,
 		'add_relation_form': add_relation_form
-	}))
+	}
+
+	t = loader.get_template('knowledge/util/add-relation.html')
+	resp = t.render(context)
+	but = KnowledgeHtmlFactory.RelationButtonFactory(relation, kn) if success else ''
+
+	return JsonResponse({
+		'form': resp,
+		'button': but
+	})
 
 
 
+
+def addTagAJ(request, knowledge_id):
+	print('add tag AJ')
+	if request.method == 'GET':
+		raise Http404
+	kn = get_object_or_404(knowledge.models.Knowledge, pk=knowledge_id)
+	add_tag_form = TagForm(request.POST)
+	print(kn)
+
+	tag = None
+	success = False
+	print('---- validating form')
+	if add_tag_form.is_valid():
+		print('---- valid form')
+		tag = add_tag_form.save(commit=False)
+		tag.knowledge = kn
+		try :
+			tag.save()
+			success = True
+		except:
+			success = False
+			add_tag_form.add_error(None, 'تگ مورد نظر موجود هست.')
+			add_tag_form.is_valid()
+	else :
+		print('---- invalid form')
+
+	context = {
+		'knowledge': kn,
+		'success': success,
+		'add_tag_form': add_tag_form
+	}
+
+	t = loader.get_template('knowledge/util/add-tag.html')
+	resp = t.render(context)
+	but = KnowledgeHtmlFactory.TagButtonFactory(tag) if success else ''
+
+	return JsonResponse({
+		'form': resp,
+		'button': but
+	})

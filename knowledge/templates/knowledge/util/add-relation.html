@@ -34,6 +34,8 @@
 
 						{% if success %}
 							<div class="form-success">رابطه با موفقیت ثبت شد.</div>
+						{% else %}
+							<div class="form-error">{{ add_relation_form.non_field_errors  }}</div>
 						{% endif %}
 					</div>
 
@@ -51,24 +53,34 @@
 </div>
 
 <script type="text/javascript">
-	var $form = $('#add-relation-form');
+	var $add_relation_form = $('#add-relation #add-relation-form');
 	function rewrite_add_relation_form(data){
 		console.log('rewrite relation');
 		// console.log(data);
-		var $res = $(data);
+		var $res = $(data['form']);
 		var $change = $res.find('#add-relation-form');
 		console.log('^^^^^^^^^^^^^^^^^^^^^');
 		console.log($change.html());
-		$form.html($change.html());
-		add_submit_event_listener();
+		$add_relation_form.html($change.html());
+		add_relation_submit_event_listener();
+
+		if(data['button']){
+			var $rel_panel = $('.control-panel-relation');
+			var $rel_but = $(data['button']);
+			console.log('relation button:');
+			console.log($rel_panel);
+			console.log($rel_but);
+			$rel_panel.append($rel_but);
+		}
 	}
-	function add_submit_event_listener(){
+	function add_relation_submit_event_listener(){
 		$('#add-relation-submit').on('click', function(event){
 			event.preventDefault();
 			console.log('submiting add-relation form');
+			console.log($add_relation_form);
 			$.ajax({type:'POST',
 				url: 'add-relation/',
-				data: $form.serialize(),
+				data: $add_relation_form.serialize(),
 				success: function(data){
 					rewrite_add_relation_form(data);
 				},
@@ -80,5 +92,5 @@
 			return false;
 		});
 	}
-	add_submit_event_listener();
+	add_relation_submit_event_listener();
 </script>

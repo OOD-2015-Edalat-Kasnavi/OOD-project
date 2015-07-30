@@ -68,10 +68,13 @@ class TagType(models.Model):
 
 class Tag(models.Model):
 	ktype = models.ForeignKey('TagType', related_name='tags')
-	knowledge = models.ForeignKey('Knowledge')
+	knowledge = models.ForeignKey('Knowledge', related_name='tags')
+
+	class Meta:
+		unique_together = ['ktype', 'knowledge']
 
 	def __str__(self):
-		return 'Tag: (' + self.type.name + ') -> ' + self.knowledge.subject
+		return 'Tag: (' + self.ktype.name + ') -> ' + self.knowledge.subject
 
 
 
@@ -93,7 +96,7 @@ class InterknowledgeRelationship(models.Model):
 	toKnowledge = models.ForeignKey('Knowledge', related_name='relationFromKnowledge')
 
 	def __str__(self):
-		return 'InterknowledgeRelationship: (' +self.type.name + '( '\
+		return 'InterknowledgeRelationship: (' +self.ktype.name + '( '\
 		       + self.fromKnowledge.subject + ' -> ' + self.toKnowledge.subject + ' )'
 
 

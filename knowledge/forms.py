@@ -23,8 +23,6 @@ class SourceForm(ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		super(SourceForm, self).__init__(*args, **kwargs)
-
-		# if you want to do it to all of them
 		convertFormErrorToFarsi(self)
 
 
@@ -40,10 +38,21 @@ class InterKnowledgeRelationshipForm(ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		super(InterKnowledgeRelationshipForm, self).__init__(*args, **kwargs)
-
-		# if you want to do it to all of them
 		convertFormErrorToFarsi(self)
 
+
+
+class TagForm(ModelForm):
+	class Meta:
+		model = knowledge.models.Tag
+		fields = ['ktype']
+		labels = {
+			'ktype': 'نوع',
+		}
+
+	def __init__(self, *args, **kwargs):
+		super(TagForm, self).__init__(*args, **kwargs)
+		convertFormErrorToFarsi(self)
 
 
 class KnowledgeForm(ModelForm):
@@ -62,7 +71,6 @@ class KnowledgeForm(ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		super(KnowledgeForm, self).__init__(*args, **kwargs)
-		# if you want to do it to all of them
 		convertFormErrorToFarsi(self)
 
 
