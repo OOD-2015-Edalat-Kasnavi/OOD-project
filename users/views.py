@@ -2,7 +2,7 @@ import users.models
 import knowledge.models
 
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse as urlReverse
 from django.contrib.auth import authenticate, login, logout
@@ -60,3 +60,5 @@ def baseView(request):
 
 		}) )
 
+def userProfileView(request, user_id):
+	raise Http404

@@ -1,0 +1,20 @@
+
+<div class="single-knowledge">
+	<div class="subject">
+		<a href="{% url 'show-knowledge' knowledge.id %}"><h1>{{ knowledge.subject }} :</h1></a>
+
+		{% if knowledge.summary %}
+			<span class="summary">
+				<p>{{ knowledge.summary }}</p>
+			</span>
+		{% endif %}
+	</div>
+
+
+	<hr class='knowledge-part-divider'>
+	<footer class="footer">
+		<div class="author triplet">نویسنده: <a href="{% url 'show-user-profile' knowledge.author.id %}">{{knowledge.author.realName}}</a></div>
+		<div class="source triplet">منبع: <a href="{% url 'show-source'  knowledge.source.id %}">{{knowledge.source.subject}}</a></div>
+		<div class="date triplet-base">تاریخ:{{knowledge.createDate}}</div>
+	</footer>
+</div>

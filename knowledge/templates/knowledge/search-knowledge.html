@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h2 class="h-title" dir="rtl">جستجو : دانش</h2>
+	<form method="get" action="{% url 'show-search-knowledge' %}">
+		<div class="form-container">
+			<!-- subject -->
+			<p><label for="id_subject">موضوع</label></p>
+			<p><input class="form-input" id="id_subject" maxlength="255" name="subject" type="text"></p>
+
+			<!-- source -->
+			<p><label for="id_source_subject">موضوع منبع</label></p>
+			<p><input class="form-input" id="id_source_subject" maxlength="255" name="source_subject" type="text"></p>
+
+			<p ><input type='submit' class="btn btn-info"></p>
+		</div>
+	</form>
+	<hr class="content-divider"/>
+
+	{% for kn in knowledge %}
+		{% include 'knowledge/util/folded-single-knowledge.html' with knowledge=kn %}
+	{% endfor %}
+
+
+{% endblock %}

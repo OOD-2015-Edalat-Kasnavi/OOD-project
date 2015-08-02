@@ -2,7 +2,8 @@ __author__ = 'kasra'
 
 import knowledge.models
 
-from django.forms import ModelForm
+from django import forms
+
 
 def convertFormErrorToFarsi(form):
 	for field in form.fields.values():
@@ -12,7 +13,7 @@ def convertFormErrorToFarsi(form):
 		}
 
 
-class SourceForm(ModelForm):
+class SourceForm(forms.ModelForm):
 	class Meta:
 		model = knowledge.models.Source
 		fields = ['subject', 'description']
@@ -26,7 +27,7 @@ class SourceForm(ModelForm):
 		convertFormErrorToFarsi(self)
 
 
-class InterKnowledgeRelationshipForm(ModelForm):
+class InterKnowledgeRelationshipForm(forms.ModelForm):
 	class Meta:
 		model = knowledge.models.InterknowledgeRelationship
 		fields = ['ktype', 'fromKnowledge', 'toKnowledge']
@@ -42,7 +43,7 @@ class InterKnowledgeRelationshipForm(ModelForm):
 
 
 
-class TagForm(ModelForm):
+class TagForm(forms.ModelForm):
 	class Meta:
 		model = knowledge.models.Tag
 		fields = ['ktype']
@@ -55,7 +56,7 @@ class TagForm(ModelForm):
 		convertFormErrorToFarsi(self)
 
 
-class KnowledgeForm(ModelForm):
+class KnowledgeForm(forms.ModelForm):
 	class Meta:
 		model = knowledge.models.Knowledge
 		fields = ['subject', 'source', 'content', 'summary', 'gainWay', 'access']

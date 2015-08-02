@@ -1,4 +1,4 @@
-
+from django.core.urlresolvers import reverse
 
 class KnowledgeHtmlFactory(object):
 	"""factory for html elements in knowledge"""

@@ -2,6 +2,7 @@ from datetime import datetime
 
 import users.models
 import knowledge.models
+import knowledge.engine
 from users.views import addUserInfoContext
 from knowledge.factory import KnowledgeHtmlFactory
 
@@ -181,5 +182,23 @@ def addCommentAJ(request, knowledge_id):
 	return JsonResponse({
 		'comment': KnowledgeHtmlFactory.CommentFactory(comment),
 	})
+
+
+@login_required()
+def showSearchKnowledge(request):
+	print('search knowledge')
+	if request.method == 'POST':
+		raise Http404
+
+	kns = knowledge.engine.SearchEngine.searchKnowledge(request.GET)
+
+	return render(request, 'knowledge/search-knowledge.html', addUserInfoContext(request, {
+		'knowledge': kns,
+
+	}))
+
+
+
+
 
 

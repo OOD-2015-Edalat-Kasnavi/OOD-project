@@ -32,8 +32,8 @@
 
 	<hr class='knowledge-part-divider'>
 	<footer class="footer">
-		<div class="author triplet">نویسنده: <a href="">{{knowledge.author.realName}}</a></div>
-		<div class="source triplet">منبع: <a href="">{{knowledge.source.subject}}</a></div>
+		<div class="author triplet">نویسنده: <a href="{% url 'show-user-profile' knowledge.author.id %}">{{knowledge.author.realName}}</a></div>
+		<div class="source triplet">منبع: <a href="{% url 'show-source'  knowledge.source.id %}">{{knowledge.source.subject}}</a></div>
 		<div class="date triplet-base">تاریخ:{{knowledge.createDate}}</div>
 	</footer> 
 
@@ -45,8 +45,8 @@
 		{% for rel in knowledge.relationToKnowledge.all %}
 			<div class='btn-group'>
 				<!-- todo add  link -->
-				<a class='btn btn-sm btn-success'>{{ rel.toKnowledge.presentation }}</a>
-				<a class='btn btn-sm btn-success'>{{ rel.ktype.presentation }}</a>
+				<a class='btn btn-sm btn-success' href="{% url 'show-knowledge' rel.toKnowledge.id %}">{{ rel.toKnowledge.presentation }}</a>
+				<a class='btn btn-sm btn-success' href="{% url 'show-relation-type' rel.ktype.id %}">{{ rel.ktype.presentation }}</a>
 				<a class='btn btn-sm btn-success'><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 			</div>
 		{% endfor %}
@@ -54,8 +54,8 @@
 		{% for rel in knowledge.relationFromKnowledge.all %}
 			<div class='btn-group'>
 				<!-- todo add  link -->
-				<a class='btn btn-sm btn-warning'>{{ rel.fromKnowledge.presentation }}</a>
-				<a class='btn btn-sm btn-warning'>{{ rel.ktype.presentation }}</a>
+				<a class='btn btn-sm btn-warning' href="{% url 'show-knowledge' rel.fromKnowledge.id %}">{{ rel.fromKnowledge.presentation }}</a>
+				<a class='btn btn-sm btn-warning' href="{% url 'show-relation-type' rel.ktype.id %}">{{ rel.ktype.presentation }}</a>
 				<a class='btn btn-sm btn-warning'><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 			</div>
 		{% endfor %}
@@ -70,7 +70,7 @@
 		{% for tag in knowledge.tags.all %}
 			<div class='btn-group'>
 				<!-- todo add  link -->
-				<a class='btn btn-info'>{{ tag.ktype.presentation }}</a>
+				<a class='btn btn-info' href="{% url 'show-tag-type' tag.ktype.id %}">{{ tag.ktype.presentation }}</a>
 				<a class='btn btn-info'><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 			</div>
 		{% endfor %}
@@ -100,17 +100,19 @@
 	</div>
 
 
-	<hr class='knowledge-part-divider'>
-	<div class="comments">
-		{% for comment in knowledge.comments.all %}
-			{% if not forloop.first %}
-				<hr class="comment-part-divider"/>
-			{% endif %}
-			<div class="comment" dir="rtl">
-				<a href="" class="comment-author" dir="rtl">{{ comment.author.user.username }}:</a>
-				<span class="comment-text"  dir="rtl">{{ comment.text }}</span>
-				<span class="comment-date" >{{ comment.date|naturaltime }}</span>
-			</div>
-		{% endfor %}
-	</div>
+	{% if knowledge.comments.all.count %}
+		<hr class='knowledge-part-divider'>
+		<div class="comments">
+			{% for comment in knowledge.comments.all %}
+				{% if not forloop.first %}
+					<hr class="comment-part-divider"/>
+				{% endif %}
+				<div class="comment" dir="rtl">
+					<a  href="{% url 'show-user-profile' comment.author.id %}" class="comment-author" dir="rtl">{{ comment.author.user.username }}:</a>
+					<span class="comment-text"  dir="rtl">{{ comment.text }}</span>
+					<span class="comment-date" dir="ltr">{{ comment.date|naturaltime }}</span>
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}
 </div>
