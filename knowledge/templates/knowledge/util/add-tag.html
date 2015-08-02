@@ -1,0 +1,85 @@
+{% load widget_tweaks %}
+
+
+<!-- Modal -->
+<div class="modal fade" id="add-tag" tabindex="-1" role="dialog" aria-labelledby="add-tagLabel" >
+	<div class="modal-dialog" role="document" >
+		<div class="modal-content" >
+			<form id='add-tag-form'>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+
+					<h4 class="modal-title" id="add-tagLabel">افزودن رابطه</h4>
+				</div>
+				<div class="modal-body">
+					<!-- form -->
+
+
+
+					<div class="form-container">
+						<!-- ktype -->
+						<p><label for="{{ add_tag_form.ktype.id_for_label }}">{{ add_tag_form.ktype.label }}</label></p>
+						<p>{{ add_tag_form.ktype|add_class:'form-input' }}</p>
+						<div class="form-error">{{ add_tag_form.ktype.errors }}</div>
+
+						{% if success %}
+							<div class="form-success">رابطه با موفقیت ثبت شد.</div>
+						{% else %}
+							<div class="form-error">{{ add_tag_form.non_field_errors  }}</div>
+						{% endif %}
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<input id='add-tag-submit' type='submit' class="btn btn-info">
+{#					<button type="button" class="btn btn-primary">Save</button>#}
+				</div>
+
+			</form>
+		</div>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+	var $add_tag_form = $('#add-tag-form');
+	function rewrite_add_tag_form(data){
+		console.log('rewrite tag');
+		console.log(data);
+		var $res = $(data['form']);
+		var $change = $res.find('#add-tag-form');
+		console.log('^^^^^^^^^^^^^^^^^^^^^');
+		console.log($change.html());
+		$add_tag_form.html($change.html());
+		add_tag_submit_event_listener();
+
+		if(data['button']){
+			var $tg_panel = $('.control-panel-tag');
+			var $tg_but = $(data['button']);
+			console.log('tag button:');
+			console.log($tg_panel);
+			console.log($tg_but);
+			$tg_panel.append($tg_but);
+		}
+	}
+	function add_tag_submit_event_listener(){
+		$('#add-tag-submit').on('click', function(event){
+			event.preventDefault();
+			console.log('submiting add-tag form');
+			$.ajax({type:'POST',
+				url: 'add-tag/',
+				data: $add_tag_form.serialize(),
+				success: function(data){
+					rewrite_add_tag_form(data);
+				},
+				error: function(data){
+					rewrite_add_tag_form(data);
+				}
+			});
+			console.log('form submited');
+			return false;
+		});
+	}
+	add_tag_submit_event_listener();
+</script>

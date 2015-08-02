@@ -12,3 +12,25 @@ $('table.table-select tr').each(function(idx, elem){
 		$(elem).toggleClass('selected-row');
 	}
 });
+
+/////////////////  add comment to knowledge  ///////////////////
+$('.interact .comment-send-but').on('click', function(event){
+	var txt = $('.interact .comment-send-text').val();
+	console.log('sending comment');
+
+	$.ajax({type:'POST',
+		url: 'add-comment/',
+		data: {'text':txt},
+		success: function(data){
+			console.log(data);
+			var com = $(data['comment']);
+			var comments = $('.comments');
+			console.log(comments);
+			console.log(com);
+			comments.append(com);
+		},
+		error: function(data){
+			console.log('sending comment failed');
+		}
+	});
+});

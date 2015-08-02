@@ -105,14 +105,22 @@ input.form-input:focus::-webkit-input-placeholder, textarea.form-input:focus::-w
 	padding: 5px 8px;
 	border-radius: 10px;
 }
-.single-knowledge hr{
+.single-knowledge hr.knowledge-part-divider{
 	margin-top: 8px;
 	margin-bottom: 8px;
 
     border: 0;
-    height: 1px;
+    height: 2px;
     background: rgb(  0,153,204);
+}
+.single-knowledge .comments hr.comment-part-divider{
+	margin-top: 4px;
+	margin-bottom: 4px;
 
+    border: 0;
+    height: 1px;
+
+    background: rgb(138,213,240);
 }
 .single-knowledge h1{
 	font-family: 'Roboto', sans-serif;
@@ -132,4 +140,12 @@ input.form-input:focus::-webkit-input-placeholder, textarea.form-input:focus::-w
 }
 .single-knowledge .add-comment{
 	margin-left: calc(100%-115px);
+}
+.comments .comment .comment-date{
+	float: left;
+}
+.comments{
+	background-color: rgba(255,255,255,0.9);
+	border-radius: 5px;
+	padding: 10px;
 }

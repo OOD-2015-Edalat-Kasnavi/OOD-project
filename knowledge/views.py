@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import users.models
 import knowledge.models
 from users.views import addUserInfoContext
@@ -7,10 +9,12 @@ from django.http import Http404, JsonResponse
 from django.template.loader import render_to_string
 from django.template import Template, Context, loader
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from knowledge.forms import SourceForm, KnowledgeForm, InterKnowledgeRelationshipForm, TagForm
 
 # Create your views here.
 
+@login_required()
 def showAddSource(request):
 	success = False
 	if request.method == 'GET':
@@ -33,6 +37,7 @@ def showAddSource(request):
 	}))
 
 
+@login_required()
 def showAddKnowledge(request):
 	user = users.models.getKnowledgeUser(request.user)
 	success = False
@@ -60,6 +65,7 @@ def showAddKnowledge(request):
 	}))
 
 
+@login_required()
 def showKnowledge(request, knowledge_id):
 	kn = get_object_or_404(knowledge.models.Knowledge, pk=knowledge_id)
 	add_relation_form = InterKnowledgeRelationshipForm()
@@ -73,6 +79,7 @@ def showKnowledge(request, knowledge_id):
 	}))
 
 
+@login_required()
 def addRelationAJ(request, knowledge_id):
 	print('add relationship AJ')
 	if request.method == 'GET':
@@ -108,7 +115,7 @@ def addRelationAJ(request, knowledge_id):
 
 
 
-
+@login_required()
 def addTagAJ(request, knowledge_id):
 	print('add tag AJ')
 	if request.method == 'GET':
@@ -148,3 +155,31 @@ def addTagAJ(request, knowledge_id):
 		'form': resp,
 		'button': but
 	})
+
+
+
+@login_required()
+def addCommentAJ(request, knowledge_id):
+	print('add comment AJ')
+	if request.method == 'GET':
+		raise Http404
+	kn = get_object_or_404(knowledge.models.Knowledge, pk=knowledge_id)
+
+	user = users.models.getKnowledgeUser(request.user)
+	txt = request.POST['text']
+	time = datetime.now()
+
+	# print('add comment user:'+str(user) + ' text:"' +txt + '" time:' + str(time))
+
+	comment = knowledge.models.Comment()
+	comment.knowledge = kn
+	comment.author = user
+	comment.text = txt
+	comment.date = time
+	comment.save()
+
+	return JsonResponse({
+		'comment': KnowledgeHtmlFactory.CommentFactory(comment),
+	})
+
+

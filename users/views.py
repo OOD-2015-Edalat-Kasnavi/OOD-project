@@ -44,6 +44,7 @@ def logoutAj(request):
 def addUserInfoContext(request, context):
 	user = users.models.getKnowledgeUser(request.user)
 	print('---- base context data for ' + str(user))
+	print(user)
 
 	context['user_realname'] = user.realName
 	context['user_is_manager'] = user.isManager
