@@ -33,6 +33,7 @@ def showAddSource(request):
 			
 
 	return render(request, 'knowledge/add-source.html', addUserInfoContext(request, {
+		'page_title': 'Add source',
 		'form': form,
 		'success': success
 	}))
@@ -61,6 +62,7 @@ def showAddKnowledge(request):
 			
 
 	return render(request, 'knowledge/add-knowledge.html', addUserInfoContext(request, {
+		'page_title': 'Add knowledge',
 		'form': form,
 		'success': success
 	}))
@@ -74,9 +76,20 @@ def showKnowledge(request, knowledge_id):
 	print('show knowledge:')
 	print(kn)
 	return render(request, 'knowledge/show-knowledge.html', addUserInfoContext(request, {
-		'knowledge':kn,
+		'page_title': kn.subject,
+		'knowledge': kn,
 		'add_relation_form': add_relation_form,
 		'add_tag_form': add_tag_form
+	}))
+
+@login_required()
+def showSource(request, source_id):
+	src = get_object_or_404(knowledge.models.Source, pk=source_id)
+	print('show source: ')
+	print(src)
+	return render(request, 'knowledge/show-source.html', addUserInfoContext(request, {
+		'page_title': src.subject,
+		'source': src,
 	}))
 
 
@@ -193,8 +206,22 @@ def showSearchKnowledge(request):
 	kns = knowledge.engine.SearchEngine.searchKnowledge(request.GET)
 
 	return render(request, 'knowledge/search-knowledge.html', addUserInfoContext(request, {
+		'page_title': 'Search knowledge',
 		'knowledge': kns,
 
+	}))
+
+@login_required()
+def showSearchSource(request):
+	print('search source')
+	if request.method == 'POST':
+		raise Http404
+
+	sources = knowledge.engine.SearchEngine.searchSource(request.GET)
+
+	return render(request, 'knowledge/search-source.html', addUserInfoContext(request, {
+		'page_title': 'Search source',
+		'sources': sources,
 	}))
 
 

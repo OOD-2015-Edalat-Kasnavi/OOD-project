@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+	<div class="source single-block">
+		<div class="source-subject">
+			<h1>{{ source.subject }}</h1>
+		</div>
+
+		<hr class='block-part-divider'>
+		<div class="source-description">
+			<h2>شرح:</h2>
+			<p>{{ source.description }}</p>
+		</div>
+	</div>
+
+	<hr class="content-divider"/>
+
+	<h1 class="title">دانش ها:</h1>
+	{% for kn in source.knowledge.all %}
+		{% include 'knowledge/util/folded-single-knowledge.html' with knowledge=kn %}
+	{% endfor %}
+
+{% endblock %}

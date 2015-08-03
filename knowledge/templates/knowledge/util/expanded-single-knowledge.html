@@ -1,12 +1,12 @@
 {% load humanize %}
 
-<div class="single-knowledge">
+<div class="single-block">
 	<div class="subject">
 		<h1>{{ knowledge.subject }}</h1>
 	</div>
 
 	{% if knowledge.summary %}
-		<hr class='knowledge-part-divider'>
+		<hr class='block-part-divider'>
 		<div class="summary">
 			<h2>خلاصه :</h2>
 			<p>{{ knowledge.summary }}</p>
@@ -14,7 +14,7 @@
 	{% endif %}
 
 	{% if knowledge.content %}
-		<hr class='knowledge-part-divider'>
+		<hr class='block-part-divider'>
 		<div class="content">
 			<h2>محتوا:</h2>
 			<p>{{ knowledge.content }}</p>
@@ -22,7 +22,7 @@
 	{% endif %}
 
 	{% if knowledge.file %}
-		<hr class='knowledge-part-divider'>
+		<hr class='block-part-divider'>
 		<div class="files">
 			<h2>فایل ها:</h2>
 			<p>{{ knowledge.file }}</p>
@@ -30,15 +30,15 @@
 	{% endif %}
 
 
-	<hr class='knowledge-part-divider'>
+	<hr class='block-part-divider'>
 	<footer class="footer">
 		<div class="author triplet">نویسنده: <a href="{% url 'show-user-profile' knowledge.author.id %}">{{knowledge.author.realName}}</a></div>
 		<div class="source triplet">منبع: <a href="{% url 'show-source'  knowledge.source.id %}">{{knowledge.source.subject}}</a></div>
-		<div class="date triplet-base">تاریخ:{{knowledge.createDate}}</div>
+		<div class="date triplet-base"  >تاریخ:<span dir="ltr">{{knowledge.createDate|naturaltime }}</span></div>
 	</footer> 
 
 
-	<hr class='knowledge-part-divider'>
+	<hr class='block-part-divider'>
 	<div class="control-panel-relation">
 		<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add-relation">افزودن رابطه</button>
 
@@ -63,7 +63,7 @@
 
 		<!-- <button class="btn btn-primary"></button> -->
 	</div>
-	<hr class='knowledge-part-divider'>
+	<hr class='block-part-divider'>
 	<div class="control-panel-tag">
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-tag">افزودن تگ</button>
 		
@@ -77,7 +77,7 @@
 		<!-- <button class="btn btn-primary"></button> -->
 	</div>
 
-	<hr class='knowledge-part-divider'>
+	<hr class='block-part-divider'>
 	<div class="interact">
 		<div class="rate middle-wrap">
 			<a href="#" class="btn btn-sm btn-danger rate-down">
@@ -101,7 +101,7 @@
 
 
 	{% if knowledge.comments.all.count %}
-		<hr class='knowledge-part-divider'>
+		<hr class='block-part-divider'>
 		<div class="comments">
 			{% for comment in knowledge.comments.all %}
 				{% if not forloop.first %}

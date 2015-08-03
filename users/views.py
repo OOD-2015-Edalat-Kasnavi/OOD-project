@@ -9,7 +9,9 @@ from django.contrib.auth import authenticate, login, logout
 
 def loginView(request):
 	if request.method == 'GET':
-		return render(request, 'user/login.html', {})
+		return render(request, 'user/login.html', {
+			'page_title': '»Login',
+		})
 
 	user = authenticate(username=request.POST['username'], password=request.POST['password'])
 	if user is not None:
@@ -25,12 +27,14 @@ def loginView(request):
 		else:
 			# print("The password is valid, but the account has been disabled!")
 			return render(request, 'user/login.html', {
+				'page_title': 'Login',
 				'invalidLogin': True,
 				'errorMessage': 'Account has been deactivated.'
 			})
 	else:
 		# the authentication system was unable to verify the username and password
 		return render(request, 'user/login.html', {
+			'page_title': 'Login',
 			'invalidLogin': True,
 			'errorMessage': 'Invalid username or password.'
 		})
@@ -57,6 +61,7 @@ def baseView(request):
 	print('---- base view')
 	
 	return render(request, 'base.html', addUserInfoContext(request, {
+		'page_title': 'دانشگستر',
 
 		}) )
 

@@ -59,12 +59,14 @@ input.form-input:focus, textarea.form-input:focus , select.form-input:focus {
 	color: #33b5e5;
 }
 
-input.form-input::-webkit-input-placeholder, textarea.form-input::-webkit-textarea-placeholder 
+/*noinspection CssInvalidPseudoSelector*/
+input.form-input::-webkit-input-placeholder, textarea.form-input::-webkit-textarea-placeholder
 , select.form-input::-webkit-input-placeholder{
 	color: white;
 }
 
-input.form-input:focus::-webkit-input-placeholder, textarea.form-input:focus::-webkit-textarea-placeholder 
+/*noinspection ALL*/
+input.form-input:focus::-webkit-input-placeholder, textarea.form-input:focus::-webkit-textarea-placeholder
 , select.form-input:focus::-webkit-input-placeholder{
 	color: #33b5e5;
 }
@@ -95,7 +97,7 @@ input.form-input:focus::-webkit-input-placeholder, textarea.form-input:focus::-w
 	background-color: rgb(138,213,240);
 }
 
-.single-knowledge{
+.single-block {
 	width: 95%;
 	background-color: rgba(255,255,255,.65);
 	margin-left: auto;
@@ -105,7 +107,7 @@ input.form-input:focus::-webkit-input-placeholder, textarea.form-input:focus::-w
 	padding: 5px 8px;
 	border-radius: 10px;
 }
-.single-knowledge hr.knowledge-part-divider{
+.single-block hr.block-part-divider {
 	margin-top: 8px;
 	margin-bottom: 8px;
 
@@ -113,7 +115,7 @@ input.form-input:focus::-webkit-input-placeholder, textarea.form-input:focus::-w
     height: 2px;
     background: rgb(  0,153,204);
 }
-.single-knowledge .comments hr.comment-part-divider{
+.single-block .comments hr.comment-part-divider{
 	margin-top: 4px;
 	margin-bottom: 4px;
 
@@ -132,24 +134,36 @@ hr.content-divider{
 }
 
 
-.single-knowledge h1{
+.single-block h1{
 	font-family: 'Roboto', sans-serif;
 	font-size: 2em;
 	color: rgb(  0,153,204);
 
 }
-.single-knowledge h2{
+.single-block h2{
 	font-family: 'Roboto', sans-serif;
 	font-size: 1.6em;
 	color: rgb(  0,153,204);
 }
-.single-knowledge .rate{
+h1.title, h2.title{
+	font-family: 'Roboto', sans-serif;
+	color: rgb(  0,153,204);
+	padding: 0 10px;
+}
+h1.title{
+	font-size: 2em;
+}
+h2.title{
+	font-size: 1.6em;
+}
+.single-block .rate{
 	float: left;
 	width: 110px;
 
 }
-.single-knowledge .add-comment{
-	margin-left: calc(100%-115px);
+
+.single-block .add-comment{
+	margin-left: calc( 100%-115px );
 }
 .comments .comment .comment-date{
 	float: left;
@@ -164,4 +178,16 @@ hr.content-divider{
 	font-size: 2em;
 	color: rgb( 0,153,204);
 	padding: 0px 20px;
+}
+.single-block.folded-knowledge{
+	float: right;
+	width: 46%;
+	margin-left: 2%;
+	margin-right: 2%;
+}
+.single-block.folded-source{
+	float: right;
+	width: 31%;
+	margin-left: 1%;
+	margin-right: 1%;
 }

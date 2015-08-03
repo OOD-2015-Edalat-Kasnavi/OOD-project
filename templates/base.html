@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
 	{% load static %}
+
 	<meta charset="utf-8">
-	<title>TimeLine</title>
+	{% if page_title %}
+		<title>{{ page_title }}</title>
+	{% endif %}
+	<link rel="shortcut icon" type="image/x-icon" href={% static 'img/site-icon.ico' %}>
 
 	<link rel="stylesheet" href={% static "CSS/bootstrap.min.css"%}>
 	<link rel="stylesheet" href={% static "CSS/bootstrap-theme.min.css" %}>

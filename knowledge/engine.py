@@ -13,9 +13,9 @@ class SearchEngine:
 	def searchUser(info):
 		name = info.get('name', '')
 		username = info.get('username', '')
-		return knowledge.models.Knowledge.objects.filter(user__username__icontains=username).filter(realName__icontains=name)
+		return knowledge.models.KUser.objects.filter(user__username__icontains=username).filter(realName__icontains=name)
 
 	@staticmethod
 	def searchSource(info):
 		sub = info.get('subject', '')
-		return knowledge.models.Knowledge.objects.filter(subject__icontains=sub)
+		return knowledge.models.Source.objects.filter(subject__icontains=sub)

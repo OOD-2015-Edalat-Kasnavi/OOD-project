@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h2 class="h-title" dir="rtl">جستجو : منبع</h2>
+	<form method="get" action="{% url 'show-search-source' %}">
+		<div class="form-container">
+			<!-- subject -->
+			<p><label for="id_subject">موضوع</label></p>
+			<p><input class="form-input" id="id_subject" maxlength="255" name="subject" type="text"></p>
+
+			<p ><input type='submit' class="btn btn-info"></p>
+		</div>
+	</form>
+	<hr class="content-divider"/>
+
+	{% for src in sources %}
+		{% include 'knowledge/util/folded-single-source.html' with source=src %}
+	{% endfor %}
+
+
+{% endblock %}

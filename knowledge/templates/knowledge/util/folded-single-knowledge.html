@@ -1,5 +1,6 @@
+{% load humanize %}
 
-<div class="single-knowledge">
+<div class="single-block folded-knowledge">
 	<div class="subject">
 		<a href="{% url 'show-knowledge' knowledge.id %}"><h1>{{ knowledge.subject }} :</h1></a>
 
@@ -11,10 +12,10 @@
 	</div>
 
 
-	<hr class='knowledge-part-divider'>
+	<hr class='block-part-divider'>
 	<footer class="footer">
 		<div class="author triplet">نویسنده: <a href="{% url 'show-user-profile' knowledge.author.id %}">{{knowledge.author.realName}}</a></div>
 		<div class="source triplet">منبع: <a href="{% url 'show-source'  knowledge.source.id %}">{{knowledge.source.subject}}</a></div>
-		<div class="date triplet-base">تاریخ:{{knowledge.createDate}}</div>
+		<div class="date triplet-base">تاریخ:<span  dir="ltr">{{knowledge.createDate|naturaltime}}</span></div>
 	</footer>
 </div>
