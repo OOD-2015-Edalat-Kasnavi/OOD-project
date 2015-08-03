@@ -1,8 +1,9 @@
 import users.models
 import knowledge.models
+import knowledge.engine
 
-from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse as urlReverse
 from django.contrib.auth import authenticate, login, logout
@@ -65,5 +66,27 @@ def baseView(request):
 
 		}) )
 
+
+@login_required()
 def userProfileView(request, user_id):
-	raise Http404
+	usr = get_object_or_404(users.models.KUser, pk=user_id)
+	print('show user profile')
+
+	return render(request, 'user/show-user-profile.html', addUserInfoContext(request, {
+		'page_title': usr.realName,
+		'kuser': usr,
+	}))
+
+
+@login_required()
+def searchUser(request):
+	print('search user')
+	if request.method == 'POST':
+		raise Http404
+
+	kusers = knowledge.engine.SearchEngine.searchUser(request.GET)
+
+	return render(request, 'user/search-user.html', addUserInfoContext(request, {
+		'page_title': 'Search user',
+		'kusers': kusers,
+	}))

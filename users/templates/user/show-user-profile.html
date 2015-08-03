@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+	{% include 'user/util/single-user-profile.html' %}
+
+	<hr class="content-divider"/>
+
+	<h1 class="title">دانش ها:</h1>
+	{% for kn in kuser.knowledge.all %}
+		{% include 'knowledge/util/folded-single-knowledge.html' with knowledge=kn %}
+	{% endfor %}
+
+{% endblock %}

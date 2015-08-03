@@ -18,7 +18,6 @@ urlpatterns = [
     url(r'^source/(?P<source_id>\d+)/$', knowledge.views.showSource, name='show-source'),
 
     url(r'^search/knowledge/$', knowledge.views.showSearchKnowledge, name='show-search-knowledge'),
-    url(r'^search/user/$', emptyFunc, name='show-search-user'),
     url(r'^search/source/$', knowledge.views.showSearchSource, name='show-search-source'),
 
 

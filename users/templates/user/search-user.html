@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h2 class="h-title" dir="rtl">جستجو : کاربر</h2>
+	<form method="get" action="{% url 'show-search-user' %}">
+		<div class="form-container">
+			<!-- name -->
+			<p><label for="id_name">نام</label></p>
+			<p><input class="form-input" id="id_name" maxlength="255" name="name" type="text"></p>
+
+			<!-- username -->
+			<p><label for="id_username">نام کاربری</label></p>
+			<p><input class="form-input" id="id_username" maxlength="255" name="username" type="text"></p>
+
+			<p ><input type='submit' class="btn btn-info"></p>
+		</div>
+	</form>
+	<hr class="content-divider"/>
+
+	{% for usr in kusers %}
+		{% include 'user/util/single-user-profile.html' with kuser=usr folded=True %}
+	{% endfor %}
+
+
+{% endblock %}

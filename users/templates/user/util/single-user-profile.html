@@ -1,0 +1,30 @@
+
+<div class="user-profile single-block {% if folded %}folded3-block{% endif %}">
+	<div class="user-real-name">
+		<a href="{% url 'show-user-profile'  kuser.id %}"><h1>{{ kuser.realName }}</h1></a>
+	</div>
+
+	<hr class='block-part-divider'>
+	<div class="user-name">
+		<h2>نام: </h2>
+		<span> {{ kuser.user.username }}</span>
+	</div>
+
+	<hr class='block-part-divider'>
+	<div class="user-employee-id">
+		<h2>شماره کارمندی: </h2>
+		<span> {{ kuser.employeeId }}</span>
+	</div>
+
+	<hr class='block-part-divider'>
+	<div class="user-job">
+		<h2>شغل: </h2>
+		<span> {{ kuser.job }}</span>
+	</div>
+
+{#		<hr class='block-part-divider'>#}
+{#		<div class="user-status">#}
+{#			<h2>وضعیت: </h2>#}
+{#			<span> {{ kuser.status }}</span>#}
+{#		</div>#}
+</div>

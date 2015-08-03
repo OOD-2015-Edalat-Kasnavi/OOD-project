@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.db import models
 from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth import authenticate
 
 
 ###################  User  ###################

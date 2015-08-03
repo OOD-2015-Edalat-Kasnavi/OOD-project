@@ -179,13 +179,13 @@ h2.title{
 	color: rgb( 0,153,204);
 	padding: 0px 20px;
 }
-.single-block.folded-knowledge{
+.single-block.folded2-block {
 	float: right;
 	width: 46%;
 	margin-left: 2%;
 	margin-right: 2%;
 }
-.single-block.folded-source{
+.single-block.folded3-block {
 	float: right;
 	width: 31%;
 	margin-left: 1%;

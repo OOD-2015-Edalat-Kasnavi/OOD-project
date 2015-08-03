@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^logout/$', users.views.logoutAj, name='logout'),
     url(r'^base/$', users.views.baseView, name='base-view'),
     url(r'^user-profile/(?P<user_id>\d+)$', users.views.userProfileView, name='show-user-profile'),
+
+    url(r'^search/user/$', users.views.searchUser, name='show-search-user'),
 ]
