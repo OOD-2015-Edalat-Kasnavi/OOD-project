@@ -9,7 +9,7 @@ def convertFormErrorToFarsi(form):
 	for field in form.fields.values():
 		field.error_messages = {'required':('پر کردن ' + '"{fieldname}"' + ' ضروری است.').
 		format(fieldname=field.label),
-		'invalid':('اطلاعات ' + '{fieldname}' + 'صحیح نیست.').format(fieldname=field.label),
+		'invalid':('اطلاعات ' + '"{fieldname}"' + ' صحیح نیست.').format(fieldname=field.label),
 		}
 
 

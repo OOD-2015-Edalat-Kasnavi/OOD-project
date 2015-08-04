@@ -25,17 +25,22 @@ class Knowledge(models.Model):
 	def presentation(self):
 		return self.subject
 
+
 class Rate(models.Model):
 	up = models.BooleanField(default=True)
 	voter = models.ForeignKey('users.KUser', related_name='rates')
 	knowledge = models.ForeignKey('Knowledge', related_name='rates')
 
+	class Meta:
+		unique_together = ['voter', 'knowledge']
+
 	def __str__(self):
-		return str(knowledge) + ' vote ' + ('up' if up else 'down') + ' by ' + str(voter)
+		return str(self.Knowledge) + ' vote ' + ('up' if self.up else 'down') + ' by ' + str(self.v)
+
 
 ###################  Source  ###################
 class Source(models.Model):
-	subject = models.CharField(max_length=255)
+	subject = models.CharField(max_length=255, unique=True)
 	description = models.TextField()
 	createDate = models.DateTimeField(default=datetime.now)
 
@@ -57,7 +62,7 @@ class ProjectProces(Source):
 
 ###################  Tag  ###################
 class TagType(models.Model):
-	name = models.CharField(max_length=255)
+	name = models.CharField(max_length=255, unique=True)
 
 	def __str__(self):
 		return 'TagType: ' + self.name
@@ -80,12 +85,11 @@ class Tag(models.Model):
 
 ###################  Relation  ###################
 class InterknowledgeRelationshipType(models.Model):
-	name = models.CharField(max_length=255)
+	name = models.CharField(max_length=255, unique=True)
 
 	def __str__(self):
 		return 'RelationshipType: ' + self.name
 
-	
 	def presentation(self):
 		return self.name
 
@@ -94,6 +98,9 @@ class InterknowledgeRelationship(models.Model):
 	ktype = models.ForeignKey('InterknowledgeRelationshipType', related_name='relations')
 	fromKnowledge = models.ForeignKey('Knowledge', related_name='relationToKnowledge')
 	toKnowledge = models.ForeignKey('Knowledge', related_name='relationFromKnowledge')
+
+	class Meta:
+		unique_together = ['ktype', 'fromKnowledge', 'toKnowledge']
 
 	def __str__(self):
 		return 'InterknowledgeRelationship: (' +self.ktype.name + '( '\

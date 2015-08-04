@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^login/$', users.views.loginView, name='login'),
     url(r'^logout/$', users.views.logoutAj, name='logout'),
     url(r'^base/$', users.views.baseView, name='base-view'),
+    url(r'^register/$', users.views.showRegisterKUser, name='register'),
     url(r'^user-profile/(?P<user_id>\d+)$', users.views.userProfileView, name='show-user-profile'),
 
     url(r'^search/user/$', users.views.searchUser, name='show-search-user'),

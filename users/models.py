@@ -11,9 +11,12 @@ class KUser(models.Model):
 	realName = models.CharField(max_length=255)
 	job = models.CharField(max_length=255)
 	privilege = models.IntegerField()
-	employeeId = models.IntegerField(unique=True)
-	isManager = models.BooleanField(default=False)
-	state = models.IntegerField()
+	# django doesn't support unique error message in forms
+	employeeId = models.IntegerField(unique=True, error_messages={'unique':"شماره ی کارمندی تکراریست."})
+	isManager = models.BooleanField(choices=((False, 'کاربر'), (True, 'مدیر')), default=False)
+
+	STATE_CHOICES = (('0', 'فعال'),('1', 'غیر فعال'),('2', 'اخراج شده'),)
+	state = models.SmallIntegerField(default=0, choices=STATE_CHOICES)
 
 	GENDER_CHOICES = (('M', 'Male'),('F', 'Female'),)
 	gender = models.CharField(max_length=1, choices=GENDER_CHOICES)

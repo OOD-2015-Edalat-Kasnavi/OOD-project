@@ -11,6 +11,16 @@
 	</div>
 
 	<hr class='block-part-divider'>
+	<div class="user-mail">
+		<h2>میل: </h2>
+		{% if kuser.user.email  %}
+			<span> {{ kuser.user.email }}</span>
+		{% else %}
+			<span> ثبت نشده است.</span>
+		{% endif %}
+	</div>
+
+	<hr class='block-part-divider'>
 	<div class="user-employee-id">
 		<h2>شماره کارمندی: </h2>
 		<span> {{ kuser.employeeId }}</span>

@@ -1,7 +1,11 @@
+import sys
+
 import users.models
 import knowledge.models
 import knowledge.engine
+from users.forms import KUserForm
 
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -89,4 +93,34 @@ def searchUser(request):
 	return render(request, 'user/search-user.html', addUserInfoContext(request, {
 		'page_title': 'Search user',
 		'kusers': kusers,
+	}))
+
+
+@login_required()
+def showRegisterKUser(request):
+	success = False
+	if request.method == 'GET':
+		form = KUserForm()
+	if request.method == 'POST':
+		form = KUserForm(request.POST)
+		print('---- validating form')
+		if form.is_valid():
+			print('---- valid form')
+			try:
+				print('register user for')
+				form.save()
+				print('form saved')
+				success = True
+			except :
+				print("Unexpected error:", sys.exc_info()[0])
+				success = False
+
+		else :
+			print('---- invalid form')
+
+
+	return render(request, 'user/register.html', addUserInfoContext(request, {
+		'page_title': 'Register',
+		'form': form,
+		'success': success
 	}))
