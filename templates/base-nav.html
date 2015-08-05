@@ -71,20 +71,48 @@
 
 				<div   class="input-group-btn">
 					<button   dir="rtl"  id="navbar-subject-chooser"  type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> موضوع <span class="caret"></span></button>
-					<ul class="dropdown-menu" role="menu" >
-						<li><a >دانش</a></li>
-						<li><a >منبع</a></li>
-						<li><a >کاربر</a></li>
-						<li><a >نامه</a></li>
+					<ul class="dropdown-menu nav-search-menu" role="menu" data-url="" data-q="">
+						<li><a data-q="subject" data-url="{% url 'show-search-knowledge' %}">دانش</a></li>
+						<li><a data-q="subject" data-url="{% url 'show-search-source' %}">منبع</a></li>
+						<li><a data-q="username" data-url="{% url 'show-search-user' %}">کاربر</a></li>
 					</ul>
 				</div>
-				<input id="navbar-search-input" type="text" placeholder="جستجو"  class="form-control">
+				<input id="nav-search-input" type="text" placeholder="جستجو"  class="form-control">
 					   <span class="input-group-btn">
-						  <button class="btn btn-default" type="button">
+						  <button id="nav-search-but" class="btn btn-default " type="button">
 							  <i class="glyphicon glyphicon-search"></i>
 						  </button>
 					   </span>
 			</div>
 		</form>
 	</div>
+	<script>
+		$('.dropdown-menu.nav-search-menu li a').each(function(elem, val){
+			console.log('add drop down');
+			console.log(elem);
+			console.log(val);
+			$(val).on('click', function(e){
+				var $menu = $('.dropdown-menu.nav-search-menu');
+				var newUrl = $(this).attr('data-url');
+				var q = $(this).attr('data-q');
+				$menu.attr('data-url', newUrl);
+				$menu.attr('data-q', q);
+				console.log('search menu clicked url: ' + newUrl + ' q:' + q);
+			});
+		});
+		$('#nav-search-but').on('click', function(e){
+			var $menu=$('.dropdown-menu.nav-search-menu');
+			var url = $menu.attr('data-url');
+			var q =  $menu.attr('data-q');
+			var val = $('#nav-search-input').val();
+			console.log('search url:'+url+' q:'+q+' val:'+val);
+			if(url == '')
+				return false;
+
+			var hop = url+'?'+q+'='+val;
+			console.log(hop);
+			location.href= hop;
+
+		});
+	</script>
 </nav>
