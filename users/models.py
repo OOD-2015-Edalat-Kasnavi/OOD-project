@@ -32,13 +32,18 @@ class KUser(models.Model):
 		self.save()
 
 	def fire(self):
-		pass
+		print('dismiss user: ' + self.presentation())
+		return
+		self.state = 2
+		self.user.is_active = False
+		self.user.is_staff = False
+		self.user.is_superuser = False
 
 	def emailPassword(self):
 		pass
 
-	def changePassword(self):
-		pass
+	def changePassword(self, newPass):
+		self.user.set_password(newPass)
 
 	def checkPass(self, password):
 		user = authenticate(username=self.username, password=password)

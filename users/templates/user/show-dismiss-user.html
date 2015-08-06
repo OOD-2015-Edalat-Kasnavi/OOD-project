@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="">
+		<div id="dismiss-submit-message"></div>
+		<table class="table-select simple-part-margin">
+			<tr>
+				<th>نام کاربری</th>
+				<th>نام</th>
+				<th>شماره کارمندی</th>
+				<th>شغل</th>
+				<th>سطح دسترسی</th>
+			</tr>
+			{% for kuser in kusers %}
+				<tr data-kuser-id="{{ kuser.id }}">
+					<td>{{ kuser.user.username }}</td>
+					<td>{{ kuser.realName }}</td>
+					<td>{{ kuser.employeeId }}</td>
+					<td>{{ kuser.job }}</td>
+					<td>{{ kuser.privilege }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+		<button id="dismiss-but" type='submit' class="btn btn-info center-block text-center ">حذف</button>
+	</div>
+
+{% endblock %}
+
+{% block additional-script %}
+	<script>
+		$('#dismiss-but').on('click', function(e){
+			console.log('dismiss');
+			var ids = [];
+			$('tr.selected-row').each(function(idx, elem){
+				console.log('add element');
+				console.log(elem);
+				ids.push($(elem).attr('data-kuser-id'));
+			});
+			console.log('ids:');
+			console.log(ids);
+			$.post("{% url 'dismiss' %}", {'ids': JSON.stringify(ids)}, function(data){
+				console.log('receive dismiss response');
+				console.log(data);
+				$('#dismiss-submit-message').html(data['message'])
+
+			});
+		});
+
+	</script>
+{% endblock %}

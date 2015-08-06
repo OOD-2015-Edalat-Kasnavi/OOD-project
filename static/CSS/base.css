@@ -58,6 +58,10 @@ hr.divider#search-hr-line{
 
 
 /************table***********/
+.simple-part-margin{
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
 table.table-select{
 	/*margin: 10px auto 15px auto;*/
 	width: 90%;

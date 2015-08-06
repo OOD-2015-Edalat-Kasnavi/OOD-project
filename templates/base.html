@@ -25,10 +25,14 @@
 <body dir="rtl">
 
 	{% include 'base-nav.html' %}
-		{% block content %}
-		{% endblock %}
+	{% block content %}
+	{% endblock %}
 	
 
-<script src={% static "js/base.js"%}></script>
+	<script src={% static "js/base.js"%}></script>
+
+	{% block additional-script %}
+	{% endblock %}
+
 </body>
 </html>

@@ -1,4 +1,5 @@
 import sys
+import json
 
 import users.models
 import knowledge.models
@@ -6,11 +7,11 @@ import knowledge.engine
 from users.forms import KUserForm
 
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse as urlReverse
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect, Http404, JsonResponse
 
 def loginView(request):
 	if request.method == 'GET':
@@ -124,3 +125,29 @@ def showRegisterKUser(request):
 		'form': form,
 		'success': success
 	}))
+
+
+@login_required()
+def showDismissKUser(request):
+	print('dismiss users')
+	if request.method == 'GET':
+		kusers = users.models.KUser.objects.all()
+		print('send page for get method')
+		return render(request, 'user/show-dismiss-user.html', addUserInfoContext(request, {
+			'page_title': 'Dismiss',
+			'kusers': kusers,
+		}))
+
+	elif request.method == 'POST':
+		print(request.POST)
+		ids = json.loads(request.POST['ids'])
+		print('ids:')
+		print(ids)
+		print(type(ids))
+		kusers = users.models.KUser.objects.filter(pk__in=ids)
+		print(kusers)
+		for kuser in kusers:
+			kuser.fire()
+		return JsonResponse({'message': 'request received'})
+
+	return None

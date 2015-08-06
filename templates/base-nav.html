@@ -88,16 +88,16 @@
 	</div>
 	<script>
 		$('.dropdown-menu.nav-search-menu li a').each(function(elem, val){
-			console.log('add drop down');
-			console.log(elem);
-			console.log(val);
+{#			console.log('add drop down');#}
+{#			console.log(elem);#}
+{#			console.log(val);#}
 			$(val).on('click', function(e){
 				var $menu = $('.dropdown-menu.nav-search-menu');
 				var newUrl = $(this).attr('data-url');
 				var q = $(this).attr('data-q');
 				$menu.attr('data-url', newUrl);
 				$menu.attr('data-q', q);
-				console.log('search menu clicked url: ' + newUrl + ' q:' + q);
+{#				console.log('search menu clicked url: ' + newUrl + ' q:' + q);#}
 			});
 		});
 		$('#nav-search-but').on('click', function(e){
@@ -105,7 +105,7 @@
 			var url = $menu.attr('data-url');
 			var q =  $menu.attr('data-q');
 			var val = $('#nav-search-input').val();
-			console.log('search url:'+url+' q:'+q+' val:'+val);
+{#			console.log('search url:'+url+' q:'+q+' val:'+val);#}
 			if(url == '')
 				return false;
 
