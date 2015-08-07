@@ -20,10 +20,10 @@ class KnowledgeHtmlFactory(object):
 		btn_type = ''
 		other_kn = None
 		if relation.fromKnowledge == kn:
-			btn_type = 'btn-warning'
+			btn_type = 'btn-success'
 			other_kn = relation.toKnowledge
 		elif relation.toKnowledge == kn:
-			btn_type = 'btn-success'
+			btn_type = 'btn-warning'
 			other_kn = relation.fromKnowledge
 		else:
 			return ''

@@ -8,12 +8,12 @@
 
 		<div class="form-container">
 			<!-- subject -->
-			<p><label for="{{ form.subject.id_for_label }}">{{ form.subject.label }}</label></p>
+			<p><label for="{{ form.subject.id_for_label }}">{{ form.subject.label }}*</label></p>
 			<p>{{ form.subject|add_class:'form-input' }}</p>
 			<div class="form-error">{{ form.subject.errors }}</div>
 
 			<!-- source -->
-			<p><label for="{{ form.source.id_for_label }}">{{ form.source.label }}</label></p>
+			<p><label for="{{ form.source.id_for_label }}">{{ form.source.label }}*</label></p>
 			<p>{{ form.source|add_class:'form-input' }}</p>
 			<div class="form-error">{{ form.source.errors }}</div>
 
@@ -33,14 +33,16 @@
 			<div class="form-error">{{ form.gainWay.errors }}</div>
 
 			<!-- access -->
-			<p><label for="{{ form.access.id_for_label }}">{{ form.access.label }}</label></p>
+			<p><label for="{{ form.access.id_for_label }}">{{ form.access.label }}*</label></p>
 			<p>{{ form.access|add_class:'form-input' }}</p>
 			<div class="form-error">{{ form.access.errors }}</div>
+
+			<div class="small margin-bottom-15">پر کردن ورودی هایی که با * مشخص شده اند ضروریست.</div>
 
 			{% if success %}
 				<div class="form-success">دانش با موفقیت ثبت شد.</div>
 			{% endif %}
-			<p class=""><input type='submit' class="btn btn-info"></p>
+			<p class=""><input type='submit' class="btn btn-info" value="افزودن"></p>
 		</div>
 		
 

@@ -67,7 +67,7 @@ def baseView(request):
 	print('---- base view')
 	
 	return render(request, 'base.html', addUserInfoContext(request, {
-		'page_title': 'دانشگستر',
+		'page_title': 'دانش گستر',
 
 		}) )
 

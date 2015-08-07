@@ -4,7 +4,7 @@
 
 {% block content %}
 	<form method="post" action="">
-		<h2 class="h-title" dir="rtl">ایجاد: نوع برچسب</h2>
+		<h2 class="h-title" dir="rtl">ایجاد: برچسب</h2>
 
 		<div class="form-container">
 			<!-- name -->
@@ -13,10 +13,12 @@
 			<div class="form-error">{{ form.name.errors }}</div>
 
 
+			<div class="small margin-bottom-15">پر کردن ورودی هایی که با * مشخص شده اند ضروریست.</div>
+
 			{% if success %}
 				<div class="form-success">نوع برچسب با موفقیت ثبت شد.</div>
 			{% endif %}
-			<p class=""><input type='submit' class="btn btn-info"></p>
+			<p class=""><input type='submit' class="btn btn-info" value="ایجاد"></p>
 		</div>
 
 

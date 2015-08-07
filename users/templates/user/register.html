@@ -4,62 +4,65 @@
 
 {% block content %}
 	<form method="post" action="">
+		<h2 class="h-title" dir="rtl">ثبت نام کاربر</h2>
 
 		<div class="form-container">
 			<!-- username -->
-			<p><label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label></p>
+			<p><label for="{{ form.username.id_for_label }}">{{ form.username.label }}*</label></p>
 			<p>{{ form.username|add_class:'form-input' }}</p>
 			<div class="form-error">{{ form.username.errors }}</div>
 
 			<!-- realName -->
-			<p><label for="{{ form.realName.id_for_label }}">{{ form.realName.label }}</label></p>
+			<p><label for="{{ form.realName.id_for_label }}">{{ form.realName.label }}*</label></p>
 			<p>{{ form.realName|add_class:'form-input' }}</p>
 			<div class="form-error">{{ form.realName.errors }}</div>
 
 			<!-- gender -->
-			<p><label for="{{ form.gender.id_for_label }}">{{ form.gender.label }}</label></p>
+			<p><label for="{{ form.gender.id_for_label }}">{{ form.gender.label }}*</label></p>
 			<p>{{ form.gender|add_class:'form-input' }}</p>
 			<div class="form-error">{{ form.gender.errors }}</div>
 
 			<!-- email -->
-			<p><label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label></p>
+			<p><label for="{{ form.email.id_for_label }}">{{ form.email.label }}*</label></p>
 			<p>{{ form.email|add_class:'form-input' }}</p>
 			<div class="form-error">{{ form.email.errors }}</div>
 
 			<!-- employeeId -->
-			<p><label for="{{ form.employeeId.id_for_label }}">{{ form.employeeId.label }}</label></p>
+			<p><label for="{{ form.employeeId.id_for_label }}">{{ form.employeeId.label }}*</label></p>
 			<p>{{ form.employeeId|add_class:'form-input' }}</p>
 			<div class="form-error">{{ form.employeeId.errors }}</div>
 
 			<!-- job -->
-			<p><label for="{{ form.job.id_for_label }}">{{ form.job.label }}</label></p>
+			<p><label for="{{ form.job.id_for_label }}">{{ form.job.label }}*</label></p>
 			<p>{{ form.job|add_class:'form-input' }}</p>
 			<div class="form-error">{{ form.job.errors }}</div>
 
 			<!-- isManager -->
-			<p><label for="{{ form.isManager.id_for_label }}">{{ form.isManager.label }}</label></p>
+			<p><label for="{{ form.isManager.id_for_label }}">{{ form.isManager.label }}*</label></p>
 			<p>{{ form.isManager|add_class:'form-input' }}</p>
 			<div class="form-error">{{ form.isManager.errors }}</div>
 
 			<!-- privilege -->
-			<p><label for="{{ form.privilege.id_for_label }}">{{ form.privilege.label }}</label></p>
+			<p><label for="{{ form.privilege.id_for_label }}">{{ form.privilege.label }}*</label></p>
 			<p>{{ form.privilege|add_class:'form-input' }}</p>
 			<div class="form-error">{{ form.privilege.errors }}</div>
 
 			<!-- pass1 -->
-			<p><label for="{{ form.pass1.id_for_label }}">{{ form.pass1.label }}</label></p>
+			<p><label for="{{ form.pass1.id_for_label }}">{{ form.pass1.label }}*</label></p>
 			<p>{{ form.pass1|add_class:'form-input' }}</p>
 			<div class="form-error">{{ form.pass1.errors }}</div>
 
 			<!-- pass2 -->
-			<p><label for="{{ form.pass2.id_for_label }}">{{ form.pass2.label }}</label></p>
+			<p><label for="{{ form.pass2.id_for_label }}">{{ form.pass2.label }}*</label></p>
 			<p>{{ form.pass2|add_class:'form-input' }}</p>
 			<div class="form-error">{{ form.pass2.errors }}</div>
+
+			<div class="small margin-bottom-15">پر کردن ورودی هایی که با * مشخص شده اند ضروریست.</div>
 
 			{% if success %}
 				<div class="form-success">کاربر با موفقیت ساخته شد.</div>
 			{% endif %}
-			<p class=""><input type='submit' class="btn btn-info"></p>
+			<p class=""><input type='submit' class="btn btn-info" value="ایجاد"></p>
 		</div>
 		
 

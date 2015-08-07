@@ -93,6 +93,9 @@ table.table-select tr.selected-row td{
 .margin-top-15{
 	margin-top: 15px;
 }
+.margin-bottom-15{
+	margin-bottom: 15px;
+}
 .inline-block{
 	display: inline-block;
 }

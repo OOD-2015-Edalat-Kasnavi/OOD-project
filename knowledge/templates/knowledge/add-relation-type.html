@@ -12,11 +12,12 @@
 			<p>{{ form.name|add_class:'form-input' }}</p>
 			<div class="form-error">{{ form.name.errors }}</div>
 
+			<div class="small margin-bottom-15">پر کردن ورودی هایی که با * مشخص شده اند ضروریست.</div>
 
 			{% if success %}
 				<div class="form-success">نوع رابطه با موفقیت ثبت شد.</div>
 			{% endif %}
-			<p class=""><input type='submit' class="btn btn-info"></p>
+			<p class=""><input type='submit' class="btn btn-info" value="ایجاد"></p>
 		</div>
 
 
