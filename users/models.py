@@ -15,7 +15,7 @@ class KUser(models.Model):
 	employeeId = models.IntegerField(unique=True, error_messages={'unique':"شماره ی کارمندی تکراریست."})
 	isManager = models.BooleanField(choices=((False, 'کاربر'), (True, 'مدیر')), default=False)
 
-	STATE_CHOICES = (('0', 'فعال'),('1', 'غیر فعال'),('2', 'اخراج شده'),)
+	STATE_CHOICES = ((0, 'فعال'),(1, 'غیر فعال'),(2, 'اخراج شده'),)
 	state = models.SmallIntegerField(default=0, choices=STATE_CHOICES)
 
 	GENDER_CHOICES = (('M', 'Male'),('F', 'Female'),)
@@ -33,11 +33,12 @@ class KUser(models.Model):
 
 	def fire(self):
 		print('dismiss user: ' + self.presentation())
-		return
 		self.state = 2
 		self.user.is_active = False
 		self.user.is_staff = False
 		self.user.is_superuser = False
+		self.user.save()
+		self.save()
 
 	def emailPassword(self):
 		pass

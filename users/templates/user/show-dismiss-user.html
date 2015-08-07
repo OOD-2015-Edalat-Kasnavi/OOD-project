@@ -10,6 +10,7 @@
 				<th>شماره کارمندی</th>
 				<th>شغل</th>
 				<th>سطح دسترسی</th>
+				<th>وضعیت</th>
 			</tr>
 			{% for kuser in kusers %}
 				<tr data-kuser-id="{{ kuser.id }}">
@@ -18,6 +19,7 @@
 					<td>{{ kuser.employeeId }}</td>
 					<td>{{ kuser.job }}</td>
 					<td>{{ kuser.privilege }}</td>
+					<td>{{ kuser.get_state_display }}</td>
 				</tr>
 			{% endfor %}
 		</table>
@@ -41,7 +43,13 @@
 			$.post("{% url 'dismiss' %}", {'ids': JSON.stringify(ids)}, function(data){
 				console.log('receive dismiss response');
 				console.log(data);
-				$('#dismiss-submit-message').html(data['message'])
+				$('#dismiss-submit-message').html(data['message']);
+				if(data['success']) {
+					setTimeout(function(){
+						console.log('reload page');
+						location.reload();
+					}, 5000);
+				}
 
 			});
 		});

@@ -11,9 +11,37 @@ from django.template.loader import render_to_string
 from django.template import Template, Context, loader
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from knowledge.forms import SourceForm, KnowledgeForm, InterKnowledgeRelationshipForm, TagForm
+from knowledge.forms import SourceForm, KnowledgeForm, InterKnowledgeRelationshipForm, TagForm, RelationTypeForm, TagTypeForm
 
 # Create your views here.
+
+@login_required()
+def showAddKnowledge(request):
+	user = users.models.getKnowledgeUser(request.user)
+	success = False
+	if request.method == 'GET':
+		form = KnowledgeForm()
+	if request.method == 'POST':
+		form = KnowledgeForm(request.POST)
+		print('---- validating form')
+		if form.is_valid():
+			print('---- valid form')
+			mod = form.save(commit=False)
+			mod.author = user
+			print('---- add author to knowledge :' + str(user))
+			success = True
+			print(mod)
+			mod.save()
+
+		else :
+			print('---- invalid form')
+
+
+	return render(request, 'knowledge/add-knowledge.html', addUserInfoContext(request, {
+		'page_title': 'Add knowledge',
+		'form': form,
+		'success': success
+	}))
 
 @login_required()
 def showAddSource(request):
@@ -38,34 +66,6 @@ def showAddSource(request):
 		'success': success
 	}))
 
-
-@login_required()
-def showAddKnowledge(request):
-	user = users.models.getKnowledgeUser(request.user)
-	success = False
-	if request.method == 'GET':
-		form = KnowledgeForm()
-	if request.method == 'POST':
-		form = KnowledgeForm(request.POST)
-		print('---- validating form')
-		if form.is_valid():
-			print('---- valid form')
-			mod = form.save(commit=False)
-			mod.author = user
-			print('---- add author to knowledge :' + str(user))
-			success = True
-			print(mod)
-			mod.save()
-
-		else :
-			print('---- invalid form')
-			
-
-	return render(request, 'knowledge/add-knowledge.html', addUserInfoContext(request, {
-		'page_title': 'Add knowledge',
-		'form': form,
-		'success': success
-	}))
 
 
 @login_required()
@@ -224,6 +224,51 @@ def showSearchSource(request):
 		'sources': sources,
 	}))
 
+
+
+@login_required()
+def showAddRelationType(request):
+	success = False
+	if request.method == 'GET':
+		form = RelationTypeForm()
+	if request.method == 'POST':
+		form = RelationTypeForm(request.POST)
+		print('---- validating form')
+		if form.is_valid():
+			print('---- valid form')
+			mod = form.save()
+			success = True
+		else :
+			print('---- invalid form')
+
+	return render(request, 'knowledge/add-relation-type.html', addUserInfoContext(request, {
+		'page_title': 'Add Relation type',
+		'form': form,
+		'success': success
+	}))
+
+
+
+@login_required()
+def showAddTagType(request):
+	success = False
+	if request.method == 'GET':
+		form = TagTypeForm()
+	if request.method == 'POST':
+		form = TagTypeForm(request.POST)
+		print('---- validating form')
+		if form.is_valid():
+			print('---- valid form')
+			mod = form.save()
+			success = True
+		else :
+			print('---- invalid form')
+
+	return render(request, 'knowledge/add-tag-type.html', addUserInfoContext(request, {
+		'page_title': 'Add Tag type',
+		'form': form,
+		'success': success
+	}))
 
 
 

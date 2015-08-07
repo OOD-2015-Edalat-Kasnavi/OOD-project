@@ -139,6 +139,7 @@ def showDismissKUser(request):
 		}))
 
 	elif request.method == 'POST':
+		success_mes = '<div class="form-success">کاربران اخراج شدند.</div>'
 		print(request.POST)
 		ids = json.loads(request.POST['ids'])
 		print('ids:')
@@ -148,6 +149,6 @@ def showDismissKUser(request):
 		print(kusers)
 		for kuser in kusers:
 			kuser.fire()
-		return JsonResponse({'message': 'request received'})
+		return JsonResponse({'message': success_mes, 'success': True})
 
 	return None

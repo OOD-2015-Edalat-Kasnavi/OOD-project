@@ -27,6 +27,8 @@ class SourceForm(forms.ModelForm):
 		convertFormErrorToFarsi(self)
 
 
+
+
 class InterKnowledgeRelationshipForm(forms.ModelForm):
 	class Meta:
 		model = knowledge.models.InterknowledgeRelationship
@@ -74,4 +76,29 @@ class KnowledgeForm(forms.ModelForm):
 		super(KnowledgeForm, self).__init__(*args, **kwargs)
 		convertFormErrorToFarsi(self)
 
+
+
+class RelationTypeForm(forms.ModelForm):
+	class Meta:
+		model = knowledge.models.InterknowledgeRelationshipType
+		fields = ['name']
+		labels = {
+			'name': 'مبحث',
+		}
+
+	def __init__(self, *args, **kwargs):
+		super(RelationTypeForm, self).__init__(*args, **kwargs)
+		convertFormErrorToFarsi(self)
+
+class TagTypeForm(forms.ModelForm):
+	class Meta:
+		model = knowledge.models.TagType
+		fields = ['name']
+		labels = {
+			'name': 'مبحث',
+		}
+
+	def __init__(self, *args, **kwargs):
+		super(TagTypeForm, self).__init__(*args, **kwargs)
+		convertFormErrorToFarsi(self)
 

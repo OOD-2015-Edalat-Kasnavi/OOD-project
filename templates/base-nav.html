@@ -33,7 +33,7 @@
 					<a data-toggle="dropdown" class="dropdown-toggle" href="#">مدیریت کاربران<b class="caret"></b> </a>
 					<ul role="menu" class="dropdown-menu">
 						<li><a href="{% url 'register' %}">ثبت نام کاربر</a></li>
-						<li><a href="">اخراج کاربر</a></li>
+						<li><a href="{% url 'dismiss' %}">اخراج کاربر</a></li>
 						<li><a href="">بررسی درخواست ویژه</a></li>
 					</ul>
 				</li>
@@ -43,11 +43,11 @@
 				<ul role="menu" class="dropdown-menu">
 					<li><a href={% url 'add-knowledge' %}>افزودن دانش</a></li>
 					<li><a href={% url 'add-source' %}>افزودن منبع</a></li>
-					<li><a href="">ایجاد برچسب</a></li>
+					<li><a href="{% url 'add-tag-type' %}">ایجاد برچسب</a></li>
 					<li><a href="">حذف برچسب</a></li>
 					{% if user_is_manager %}
 						<li role="presentation" class="divider"></li>
-						<li><a href="">ایجاد رابطه میان دانشی</a></li>
+						<li><a href="{% url 'add-relation-type' %}">ایجاد رابطه میان دانشی</a></li>
 						<li><a href="">بررسی استفاده نادرست</a></li>
 					{% endif %}
 				</ul>

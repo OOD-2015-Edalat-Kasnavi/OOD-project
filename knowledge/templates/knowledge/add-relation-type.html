@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+	<form method="post" action="">
+		<h2 class="h-title" dir="rtl">ایجاد: نوع رابطه</h2>
+
+		<div class="form-container">
+			<!-- name -->
+			<p><label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label></p>
+			<p>{{ form.name|add_class:'form-input' }}</p>
+			<div class="form-error">{{ form.name.errors }}</div>
+
+
+			{% if success %}
+				<div class="form-success">نوع رابطه با موفقیت ثبت شد.</div>
+			{% endif %}
+			<p class=""><input type='submit' class="btn btn-info"></p>
+		</div>
+
+
+
+	</form>
+{% endblock %}

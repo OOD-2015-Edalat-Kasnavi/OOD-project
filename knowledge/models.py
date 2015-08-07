@@ -62,7 +62,7 @@ class ProjectProces(Source):
 
 ###################  Tag  ###################
 class TagType(models.Model):
-	name = models.CharField(max_length=255, unique=True)
+	name = models.CharField(max_length=255, unique=True,error_messages={'unique':'نوع برچسب برای این مبحث موجود است.'})
 
 	def __str__(self):
 		return 'TagType: ' + self.name
@@ -85,7 +85,7 @@ class Tag(models.Model):
 
 ###################  Relation  ###################
 class InterknowledgeRelationshipType(models.Model):
-	name = models.CharField(max_length=255, unique=True)
+	name = models.CharField(max_length=255, unique=True,error_messages={'unique':'نوع رابطه برای این مبحث موجود است.'})
 
 	def __str__(self):
 		return 'RelationshipType: ' + self.name
