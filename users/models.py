@@ -80,7 +80,9 @@ class Log(models.Model):
 ###################  Request  ###################
 class KRequest(models.Model):
 	user = models.ForeignKey('KUser')
-	state = models.IntegerField(default=0)
+	STATE_CHOICES = ((0, 'برسسی نشده'),(1, 'پذیرفته شده'),(2, 'رد شده'),)
+	state = models.IntegerField(default=0, choices=STATE_CHOICES)
+	reason = models.TextField(blank=True, null=True)
 
 	def deny(self):
 		pass
@@ -90,16 +92,14 @@ class KRequest(models.Model):
 
 class SpecialPrivilegeRequest(KRequest):
 	neededPrivilege = models.IntegerField()
-	reason = models.TextField()
 
 	def __str__(self):
-		return 'SpecialPrivilegeRequest: ' + self.user.username + ' p:' + str(self.neededPrivilege)
+		return 'SpecialPrivilegeRequest: ' + self.user.user.username + ' privilege:' + str(self.neededPrivilege)
 
 
 class ReportAbuseRequest(KRequest):
 	abusedName = models.CharField(max_length=255)
 	abusedUrl = models.CharField(max_length=255)
-	reason = models.TextField()
 
 	def __str__(self):
 		return 'SpecialPrivilegeRequest: ' + self.abusedName

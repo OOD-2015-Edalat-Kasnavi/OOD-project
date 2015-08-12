@@ -156,12 +156,13 @@
 {#				if(sure == false){#}
 {#					return false;#}
 {#				}#}
+				var reason = 'ذکر نشده است';
 				var $target = $(this);
 
 				var pres = $target.attr('data-abuse-name');
 				var url = $target.attr('data-abuse-url');
 				console.log('request report abuse for '+pres + ' url:' + url);
-				$.post("{% url 'report-abuse' %}", {'name':pres, 'url':url}, function(data){
+				$.post("{% url 'report-abuse' %}", {'name':pres, 'url':url, 'reason':reason}, function(data){
 
 					console.log('receive abuse response');
 					console.log(data);

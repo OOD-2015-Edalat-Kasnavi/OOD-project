@@ -58,7 +58,6 @@ def showAddSource(request):
 
 		else :
 			print('---- invalid form')
-			
 
 	return render(request, 'knowledge/add-source.html', addUserInfoContext(request, {
 		'page_title': 'Add source',
@@ -281,6 +280,7 @@ def reportAbuseAj(request):
 	if request.method == 'POST':
 		url = request.POST.dict().get('url')
 		pres = request.POST.dict().get('name')
+		reason = request.POST.dict().get('reason')
 		print('abuse reported  name: ' + pres + ' url: ' + url)
 
 		if (not pres) or (not url):
@@ -289,7 +289,7 @@ def reportAbuseAj(request):
 		abuse.user = users.models.getKnowledgeUser(request.user)
 		abuse.abusedName = pres
 		abuse.abusedUrl = url
-		abuse.reason = 'ذکر نشده.'
+		abuse.reason = reason
 		abuse.save()
 		print('abuse reported')
 		print(abuse)
@@ -304,7 +304,7 @@ def removeTagAj(request):
 		raise Http404
 	if request.method == 'POST':
 		id = request.POST.dict().get('id')
-		print('remove tag id: ' + id )
+		print('remove tag id: ' + id)
 
 		knowledge.models.Tag.objects.filter(pk=id).delete()
 		return HttpResponse('حذف با موفقیت انجام شد.')
@@ -322,3 +322,4 @@ def removeRelationAj(request):
 		knowledge.models.InterknowledgeRelationship.objects.filter(pk=id).delete()
 		return HttpResponse('حذف با موفقیت انجام شد.')
 	return None
+

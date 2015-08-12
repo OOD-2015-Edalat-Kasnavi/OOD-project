@@ -4,7 +4,7 @@ import json
 import users.models
 import knowledge.models
 import knowledge.engine
-from users.forms import KUserForm
+from users.forms import KUserForm, SpecialPrivilegeForm
 
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
@@ -152,3 +152,30 @@ def showDismissKUser(request):
 		return JsonResponse({'message': success_mes, 'success': True})
 
 	return None
+
+
+@login_required()
+def showSpecialprivilageRequest(request):
+	success = False
+	if request.method == 'GET':
+		form = SpecialPrivilegeForm()
+	if request.method == 'POST':
+		form = SpecialPrivilegeForm(request.POST)
+		print('---- validating form')
+		if form.is_valid():
+			print('---- valid form')
+			mod = form.save(commit=False)
+			mod.user = users.models.getKnowledgeUser(request.user)
+			mod.save()
+			success = True
+
+		else :
+			print('---- invalid form')
+
+	return render(request, 'user/show-special-privilage-request.html', addUserInfoContext(request, {
+		'page_title': 'Add source',
+		'form': form,
+		'success': success
+	}))
+
+

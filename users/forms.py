@@ -67,3 +67,17 @@ class KUserForm(forms.ModelForm):
 		return kuser
 
 
+
+class SpecialPrivilegeForm(forms.ModelForm):
+	class Meta:
+		model = users.models.SpecialPrivilegeRequest
+		fields = ['neededPrivilege', 'reason']
+		labels = {
+			'neededPrivilege': 'دسترسی مورد نیاز',
+			'reason': 'دلیل',
+		}
+
+	def __init__(self, *args, **kwargs):
+		super(SpecialPrivilegeForm, self).__init__(*args, **kwargs)
+		convertFormErrorToFarsi(self)
+
