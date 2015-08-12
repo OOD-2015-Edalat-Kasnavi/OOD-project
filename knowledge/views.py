@@ -276,7 +276,6 @@ def showAddTagType(request):
 
 @login_required()
 def reportAbuseAj(request):
-	# todo
 	if request.method == 'GET':
 		raise Http404
 	if request.method == 'POST':
@@ -297,3 +296,29 @@ def reportAbuseAj(request):
 		return HttpResponse(' درخواست با موفقیت ثبت شد.')
 	return None
 
+
+
+@login_required()
+def removeTagAj(request):
+	if request.method == 'GET':
+		raise Http404
+	if request.method == 'POST':
+		id = request.POST.dict().get('id')
+		print('remove tag id: ' + id )
+
+		knowledge.models.Tag.objects.filter(pk=id).delete()
+		return HttpResponse('حذف با موفقیت انجام شد.')
+	return None
+
+
+@login_required()
+def removeRelationAj(request):
+	if request.method == 'GET':
+		raise Http404
+	if request.method == 'POST':
+		id = request.POST.dict().get('id')
+		print('remove tag id: ' + id )
+
+		knowledge.models.InterknowledgeRelationship.objects.filter(pk=id).delete()
+		return HttpResponse('حذف با موفقیت انجام شد.')
+	return None

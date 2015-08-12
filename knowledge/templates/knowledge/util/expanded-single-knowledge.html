@@ -47,7 +47,8 @@
 				<!-- todo add  link -->
 				<a class='btn btn-sm btn-success' href="{% url 'show-knowledge' rel.toKnowledge.id %}">{{ rel.toKnowledge.presentation }}</a>
 				<a class='btn btn-sm btn-success' href="{% url 'show-relation-type' rel.ktype.id %}">{{ rel.ktype.presentation }}</a>
-				<a class='btn btn-sm btn-success rep-abuse' data-abuse-name="{{ rel.abuse_presentation }}" data-abuse-url="{% url 'show-knowledge' knowledge.id %}" data-remove-id="{{ rel.id }}">
+				<a class='btn btn-sm btn-success rep-abuse removable' data-abuse-name="{{ rel.abuse_presentation }}" data-abuse-url="{% url 'show-knowledge' knowledge.id %}"
+				   data-remove-id="{{ rel.id }}" data-remove-url="{% url 'remove-relation' %}">
 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 				</a>
 			</div>
@@ -58,7 +59,8 @@
 				<!-- todo add  link -->
 				<a class='btn btn-sm btn-warning' href="{% url 'show-knowledge' rel.fromKnowledge.id %}">{{ rel.fromKnowledge.presentation }}</a>
 				<a class='btn btn-sm btn-warning' href="{% url 'show-relation-type' rel.ktype.id %}">{{ rel.ktype.presentation }}</a>
-				<a class='btn btn-sm btn-warning rep-abuse' data-abuse-name="{{ rel.abuse_presentation }}" data-abuse-url="{% url 'show-knowledge' knowledge.id %}" data-remove-id="{{ rel.id }}">
+				<a class='btn btn-sm btn-warning rep-abuse removable' data-abuse-name="{{ rel.abuse_presentation }}" data-abuse-url="{% url 'show-knowledge' knowledge.id %}"
+				   data-remove-id="{{ rel.id }}" data-remove-url="{% url 'remove-relation' %}">
 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 				</a>
 			</div>
@@ -75,7 +77,8 @@
 			<div class='btn-group tag-but'>
 				<!-- todo add  link -->
 				<a class='btn btn-info' href="{% url 'show-tag-type' tag.ktype.id %}">{{ tag.ktype.presentation }}</a>
-				<a class='btn btn-info rep-abuse' data-abuse-name="{{ tag.abuse_presentation }}" data-abuse-url="{% url 'show-knowledge' knowledge.id %}" data-remove-id="{{ tag.id }}">
+				<a class='btn btn-info rep-abuse removable' data-abuse-name="{{ tag.abuse_presentation }}" data-abuse-url="{% url 'show-knowledge' knowledge.id %}"
+				   data-remove-id="{{ tag.id }}" data-remove-url="{% url 'remove-tag' %}">
 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 				</a>
 			</div>
@@ -127,6 +130,25 @@
 {% block additional-script %}
 	<script>
 		{% if user_is_manager %}
+			$('.removable').on('click', function(e){
+{#				var sure = confirm('ایا مایل به درخواست استفاده نا درست هستید؟');#}
+{#				if(sure == false){#}
+{#					return false;#}
+{#				}#}
+				var $target = $(this);
+
+				var id = $target.attr('data-remove-id');
+				var url = $target.attr('data-remove-url');
+				console.log('delete '+ id + ' url:' + url);
+				$.post(url, {'id':id}, function(data){
+
+					console.log('receive delete response');
+					console.log(data);
+					$target.parent().remove();
+					alert('حذف انجام شد')
+
+				});
+			});
 
 		{% else %}
 			$('.rep-abuse').on('click', function(e){
@@ -136,7 +158,6 @@
 {#				}#}
 				var $target = $(this);
 
-				console.log($target);
 				var pres = $target.attr('data-abuse-name');
 				var url = $target.attr('data-abuse-url');
 				console.log('request report abuse for '+pres + ' url:' + url);
@@ -144,8 +165,7 @@
 
 					console.log('receive abuse response');
 					console.log(data);
-					$('#dismiss-submit-message').html(data['message']);
-					alert('درخواست با موفقیت ثبت شد')
+					alert('درخواست با موفقیت ثبت شد.')
 
 				});
 			});
