@@ -6,11 +6,11 @@ import knowledge.engine
 from users.views import addUserInfoContext
 from knowledge.factory import KnowledgeHtmlFactory
 
-from django.http import Http404, JsonResponse
 from django.template.loader import render_to_string
 from django.template import Template, Context, loader
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.http import Http404, JsonResponse, HttpResponse, HttpResponseForbidden
 from knowledge.forms import SourceForm, KnowledgeForm, InterKnowledgeRelationshipForm, TagForm, RelationTypeForm, TagTypeForm
 
 # Create your views here.
@@ -211,6 +211,7 @@ def showSearchKnowledge(request):
 
 	}))
 
+
 @login_required()
 def showSearchSource(request):
 	print('search source')
@@ -273,4 +274,26 @@ def showAddTagType(request):
 
 
 
+@login_required()
+def reportAbuseAj(request):
+	# todo
+	if request.method == 'GET':
+		raise Http404
+	if request.method == 'POST':
+		url = request.POST.dict().get('url')
+		pres = request.POST.dict().get('name')
+		print('abuse reported  name: ' + pres + ' url: ' + url)
+
+		if (not pres) or (not url):
+			return HttpResponseForbidden('invalid request')
+		abuse = users.models.ReportAbuseRequest()
+		abuse.user = users.models.getKnowledgeUser(request.user)
+		abuse.abusedName = pres
+		abuse.abusedUrl = url
+		abuse.reason = 'ذکر نشده.'
+		abuse.save()
+		print('abuse reported')
+		print(abuse)
+		return HttpResponse(' درخواست با موفقیت ثبت شد.')
+	return None
 

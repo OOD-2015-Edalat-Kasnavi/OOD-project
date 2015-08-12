@@ -100,7 +100,14 @@
 {#				console.log('search menu clicked url: ' + newUrl + ' q:' + q);#}
 			});
 		});
+
 		$('#nav-search-but').on('click', function(e){
+			search()
+		});
+		$('#navbar-search-form').on('submit', function(){
+			search()
+		});
+		function search(){
 			var $menu=$('.dropdown-menu.nav-search-menu');
 			var url = $menu.attr('data-url');
 			var q =  $menu.attr('data-q');
@@ -112,7 +119,6 @@
 			var hop = url+'?'+q+'='+val;
 			console.log(hop);
 			location.href= hop;
-
-		});
+		}
 	</script>
 </nav>

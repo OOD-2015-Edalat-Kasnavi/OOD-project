@@ -21,7 +21,7 @@ from django.conf.urls import include, url
 from django.views.generic import RedirectView
 
 urlpatterns = [
-    url(r'^$',  RedirectView.as_view(pattern_name='base-view')),
+    url(r'^$',  RedirectView.as_view(pattern_name='base-view', permanent=True)),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include(users.urls)),
     url(r'^knowledge/', include(knowledge.urls)),

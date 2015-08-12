@@ -21,6 +21,7 @@ urlpatterns = [
 
     url(r'^search/knowledge/$', knowledge.views.showSearchKnowledge, name='show-search-knowledge'),
     url(r'^search/source/$', knowledge.views.showSearchSource, name='show-search-source'),
+    url(r'^report-abuse/$', knowledge.views.reportAbuseAj, name='report-abuse'),
 
 
     url(r'^relation-type/(?P<relation_id>\d+)/$', emptyFunc, name='show-relation-type'),

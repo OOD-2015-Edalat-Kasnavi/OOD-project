@@ -81,6 +81,9 @@ class Tag(models.Model):
 	def __str__(self):
 		return 'Tag: (' + self.ktype.name + ') -> ' + self.knowledge.subject
 
+	def abuse_presentation(self):
+		return 'برچسب: ' + self.ktype.name + ' (' + self.knowledge.subject + ')'
+
 
 
 ###################  Relation  ###################
@@ -105,6 +108,9 @@ class InterknowledgeRelationship(models.Model):
 	def __str__(self):
 		return 'InterknowledgeRelationship: (' +self.ktype.name + '( '\
 		       + self.fromKnowledge.subject + ' -> ' + self.toKnowledge.subject + ' )'
+
+	def abuse_presentation(self):
+		return 'رابطه: ' + self.ktype.name + ' (از ' + self.fromKnowledge.subject + ' به  ' + self.toKnowledge.subject + ')'
 
 
 
