@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {% block content %}
-	<form method="post" action="">
+	<form method="post" action="" enctype="multipart/form-data">
 		<h2 class="h-title" dir="rtl">ایجاد: دانش</h2>
 
 		<div class="form-container">
@@ -26,6 +26,12 @@
 			<p><label for="{{ form.content.id_for_label }}">{{ form.content.label }}</label></p>
 			<p>{{ form.content|add_class:'form-input' }}</p>
 			<div class="form-error">{{ form.content.errors }}</div>
+
+			<!-- file -->
+{#			<p>{{ form.file }}</p>#}
+			<p><label for="{{ form.file.id_for_label }}">{{ form.file.label }}</label></p>
+			<p>{{ form.file|add_class:'form-input' }}</p>
+			<div class="form-error">{{ form.file.errors }}</div>
 
 			<!-- gainWay -->
 			<p><label for="{{ form.gainWay.id_for_label }}">{{ form.gainWay.label }}</label></p>

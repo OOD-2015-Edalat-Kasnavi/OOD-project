@@ -61,7 +61,7 @@ class TagForm(forms.ModelForm):
 class KnowledgeForm(forms.ModelForm):
 	class Meta:
 		model = knowledge.models.Knowledge
-		fields = ['subject', 'source', 'content', 'summary', 'gainWay', 'access']
+		fields = ['subject', 'source', 'content', 'summary', 'gainWay', 'access', 'file']
 		exclude = ['author']
 		labels = {
 			'subject': 'موضوع',
@@ -69,7 +69,8 @@ class KnowledgeForm(forms.ModelForm):
 			'content': 'محتوا',
 			'summary':'خلاصه',
 			'gainWay':'طریقه ی کسب',
-			'access':'دسترسی'
+			'access':'دسترسی',
+			'file':'فایل',
 		}
 
 	def __init__(self, *args, **kwargs):

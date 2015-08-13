@@ -22,15 +22,17 @@ def showAddKnowledge(request):
 	if request.method == 'GET':
 		form = KnowledgeForm()
 	if request.method == 'POST':
-		form = KnowledgeForm(request.POST)
+		form = KnowledgeForm(request.POST, request.FILES)
 		print('---- validating form')
 		if form.is_valid():
+			print(request.FILES)
+			print(request.POST)
 			print('---- valid form')
 			mod = form.save(commit=False)
 			mod.author = user
 			print('---- add author to knowledge :' + str(user))
 			success = True
-			print(mod)
+
 			mod.save()
 
 		else :

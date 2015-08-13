@@ -5,9 +5,8 @@ from itertools import chain
 import users.models
 import knowledge.models
 import knowledge.engine
-from users.forms import KUserForm, SpecialPrivilegeForm
+from users.forms import KUserForm, SpecialPrivilegeForm, ChangePassForm
 
-from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse as urlReverse
@@ -210,4 +209,26 @@ def showRequestManager(request):
 		'message': message,
 	}))
 
+
+@login_required()
+def showChangePass(request):
+	success = False
+	if request.method == 'GET':
+		form = ChangePassForm()
+	if request.method == 'POST':
+		form = ChangePassForm(request.POST, username=request.user.username)
+		print('---- validating form')
+		if form.is_valid():
+			kuser = users.models.getKnowledgeUser(request.user)
+			kuser.changePassword(form.cleaned_data['pass1'])
+			success = True
+		else :
+			print('---- invalid form')
+
+
+	return render(request, 'user/show-change-password.html', addUserInfoContext(request, {
+		'page_title': 'Change Password',
+		'form': form,
+		'success': success
+	}))
 

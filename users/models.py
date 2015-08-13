@@ -46,7 +46,9 @@ class KUser(models.Model):
 		pass
 
 	def changePassword(self, newPass):
+		print('change user pass')
 		self.user.set_password(newPass)
+		self.user.save()
 
 	def checkPass(self, password):
 		user = authenticate(username=self.username, password=password)

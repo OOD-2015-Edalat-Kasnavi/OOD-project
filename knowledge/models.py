@@ -6,6 +6,9 @@ from django.db import models
 
 defaultAccessForKnowledge = 50
 
+def knowledge_file_name(instance, filename):
+	return '/'.join(['file', instance.author.user.username, filename])
+
 ###################  knowledge  ###################
 class Knowledge(models.Model):
 	subject = models.CharField(max_length=255)
@@ -17,7 +20,7 @@ class Knowledge(models.Model):
 	createDate = models.DateTimeField(default=datetime.now)
 
 	content = models.TextField(blank=True, null=True)
-	file = models.FileField(blank=True, null=True)
+	file = models.FileField(blank=True, null=True, upload_to=knowledge_file_name)
 
 	def __str__(self):
 		return 'Knowledge: ' + self.subject

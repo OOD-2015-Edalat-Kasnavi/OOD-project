@@ -5,6 +5,7 @@ from knowledge.forms import convertFormErrorToFarsi
 
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
 
 class KUserForm(forms.ModelForm):
@@ -80,4 +81,29 @@ class SpecialPrivilegeForm(forms.ModelForm):
 	def __init__(self, *args, **kwargs):
 		super(SpecialPrivilegeForm, self).__init__(*args, **kwargs)
 		convertFormErrorToFarsi(self)
+
+
+class ChangePassForm(forms.Form):
+	old_pass = forms.CharField(label='رمز عبور قدیمی', widget=forms.PasswordInput)
+	pass1 = forms.CharField(label='رمز عبور جدید', widget=forms.PasswordInput)
+	pass2 = forms.CharField(label='تکرار رمز عبور جدید', widget=forms.PasswordInput)
+
+	def clean_pass2(self):
+		data = self.cleaned_data['pass2']
+		if data != self.cleaned_data['pass1']:
+			raise forms.ValidationError('رمز عبور تطابق ندارد.', 'not matched')
+		return data
+
+	def clean_old_pass(self):
+		data = self.cleaned_data['old_pass']
+		if not authenticate(username=self.username, password=data):
+			raise forms.ValidationError('رمز عبور اشتباه است.', 'wrong-pass')
+		return data
+
+	def __init__(self, *args, **kwargs):
+		self.username = kwargs.pop('username', None)
+		print('add username to change pass: ' + str(self.username))
+		super(ChangePassForm, self).__init__(*args, **kwargs)
+		convertFormErrorToFarsi(self)
+
 

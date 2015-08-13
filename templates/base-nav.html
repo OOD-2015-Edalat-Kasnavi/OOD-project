@@ -16,7 +16,7 @@
 				<a data-toggle="dropdown" class="dropdown-toggle" href="#">{{ user_realname }}<b class="caret"></b> </a>
 				<ul role="menu" class="dropdown-menu">
 
-					<li><a href="">تغییر رمز</a></li>
+					<li><a href="{% url 'change-pass' %}">تغییر رمز</a></li>
 					<li><a href={% url 'logout' %}>خروج</a></li>
 				</ul>
 			</li>

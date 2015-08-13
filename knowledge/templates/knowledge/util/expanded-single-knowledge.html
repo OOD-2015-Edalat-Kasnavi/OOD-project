@@ -25,7 +25,7 @@
 		<hr class='block-part-divider'>
 		<div class="files">
 			<h2>فایل ها:</h2>
-			<p>{{ knowledge.file }}</p>
+			<p><a href="{{ MEDIA_URL }}{{ knowledge.file }}">{{ knowledge.file.name }}</a></p>
 		</div>
 	{% endif %}
 
