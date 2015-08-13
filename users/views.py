@@ -1,5 +1,6 @@
 import sys
 import json
+from itertools import chain
 
 import users.models
 import knowledge.models
@@ -165,7 +166,9 @@ def showSpecialprivilageRequest(request):
 		if form.is_valid():
 			print('---- valid form')
 			mod = form.save(commit=False)
-			mod.user = users.models.getKnowledgeUser(request.user)
+			kuser = users.models.getKnowledgeUser(request.user)
+			mod.user = kuser
+			mod.url = urlReverse('show-user-profile', kwargs={'user_id': kuser.id})
 			mod.save()
 			success = True
 
@@ -173,9 +176,38 @@ def showSpecialprivilageRequest(request):
 			print('---- invalid form')
 
 	return render(request, 'user/show-special-privilage-request.html', addUserInfoContext(request, {
-		'page_title': 'Add source',
+		'page_title': 'Special privilege request',
 		'form': form,
 		'success': success
+	}))
+
+
+
+
+@login_required()
+def showRequestManager(request):
+	message = ''
+	if request.method == 'GET':
+		pass
+	if request.method == 'POST':
+		ids = json.loads(request.POST['ids'])
+		print(ids)
+		decide_reqs = users.models.KRequest.objects.filter(pk__in=ids)
+		print(decide_reqs)
+		for req in decide_reqs:
+			if request.POST['action'] == 'reject':
+				req.deny()
+			else:
+				req.permit()
+		message = 'درخواست ها با موفقیت ' + ('رد ' if request.POST['action'] == 'reject' else 'پذیرفته ') + 'شدند.'
+
+	krequests = list(chain(users.models.SpecialPrivilegeRequest.objects.filter(state=0), users.models.ReportAbuseRequest.objects.filter(state=0)))
+
+
+	return render(request, 'user/show-request-manager.html', addUserInfoContext(request, {
+		'page_title': 'Request manager',
+		'requests': krequests,
+		'message': message,
 	}))
 
 

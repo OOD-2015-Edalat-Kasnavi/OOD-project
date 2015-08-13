@@ -281,14 +281,18 @@ def reportAbuseAj(request):
 		url = request.POST.dict().get('url')
 		pres = request.POST.dict().get('name')
 		reason = request.POST.dict().get('reason')
-		print('abuse reported  name: ' + pres + ' url: ' + url)
+		remove_id = request.POST.dict().get('remove_id')
+		remove_type = request.POST.dict().get('type')
+		# print('abuse reported  name: ' + pres + ' url: ' + url + ' rem_id:' + str(remove_id) + ' t' + str(type(remove_id)) + ' rem_type:' + str(remove_type) + ' t' + str(type(remove_type)))
 
 		if (not pres) or (not url):
 			return HttpResponseForbidden('invalid request')
 		abuse = users.models.ReportAbuseRequest()
 		abuse.user = users.models.getKnowledgeUser(request.user)
+		abuse.ref = remove_type
+		abuse.remove_id = remove_id
 		abuse.abusedName = pres
-		abuse.abusedUrl = url
+		abuse.url = url
 		abuse.reason = reason
 		abuse.save()
 		print('abuse reported')
@@ -317,7 +321,7 @@ def removeRelationAj(request):
 		raise Http404
 	if request.method == 'POST':
 		id = request.POST.dict().get('id')
-		print('remove tag id: ' + id )
+		print('remove tag id: ' + id)
 
 		knowledge.models.InterknowledgeRelationship.objects.filter(pk=id).delete()
 		return HttpResponse('حذف با موفقیت انجام شد.')

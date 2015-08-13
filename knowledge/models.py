@@ -1,5 +1,5 @@
 from datetime import datetime
-from users.models import KUser
+import users.models
 
 from django.db import models
 
@@ -24,6 +24,11 @@ class Knowledge(models.Model):
 
 	def presentation(self):
 		return self.subject
+
+	@staticmethod
+	def kdelete(id):
+		print('remove knowledge :' + repr(id))
+		Knowledge.objects.filter(pk=id).delete()
 
 
 class Rate(models.Model):
@@ -84,6 +89,11 @@ class Tag(models.Model):
 	def abuse_presentation(self):
 		return 'برچسب: ' + self.ktype.name + ' (' + self.knowledge.subject + ')'
 
+	@staticmethod
+	def kdelete(id):
+		print('remove tag :' + repr(id))
+		Tag.objects.filter(pk=id).delete()
+
 
 
 ###################  Relation  ###################
@@ -111,6 +121,11 @@ class InterknowledgeRelationship(models.Model):
 
 	def abuse_presentation(self):
 		return 'رابطه: ' + self.ktype.name + ' (از ' + self.fromKnowledge.subject + ' به  ' + self.toKnowledge.subject + ')'
+
+	@staticmethod
+	def kdelete(id):
+		print('remove relation :' + repr(id))
+		InterknowledgeRelationship.objects.filter(pk=id).delete()
 
 
 

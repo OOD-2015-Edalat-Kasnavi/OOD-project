@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^register/$', users.views.showRegisterKUser, name='register'),
     url(r'^dismiss/$', users.views.showDismissKUser, name='dismiss'),
     url(r'^special-privilege-request/$', users.views.showSpecialprivilageRequest, name='show-special-privilege-request'),
+    url(r'^request-manager/$', users.views.showRequestManager, name='show-request-manager'),
     url(r'^user-profile/(?P<user_id>\d+)$', users.views.userProfileView, name='show-user-profile'),
 
     url(r'^search/user/$', users.views.searchUser, name='show-search-user'),
