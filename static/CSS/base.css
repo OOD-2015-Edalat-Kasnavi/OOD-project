@@ -62,29 +62,29 @@ hr.divider#search-hr-line{
 	margin-top: 15px;
 	margin-bottom: 10px;
 }
-table.table-select{
+table.k-table {
 	/*margin: 10px auto 15px auto;*/
 	width: 90%;
 	margin-right: auto;
 	margin-left: auto;
 }
-table.table-select, table.table-select th, table.table-select td{
+table.k-table, table.k-table th, table.k-table td{
 	border-collapse: collapse;
 	border: 1px solid rgb(  0,153,204);
 }
-table.table-select th, table.table-select td{
+table.k-table th, table.k-table td{
 	padding: 4px 10px;
 }
-table.table-select th{
+table.k-table th{
 	text-align: center;
 	padding: 4px 10px;
 	background-color: rgb(  0,153,204);
 	color: #ffffff;
 }
-table.table-select td{
+table.k-table td{
 	background-color: #ffffff;
 }
-table.table-select tr.selected-row td{
+table.k-table.table-selectable tr.selected-row td{
 	background-color: rgb( 51,181,229);
 }
 .padding-top-15{

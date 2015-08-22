@@ -90,7 +90,7 @@ class Tag(models.Model):
 		return 'Tag: (' + self.ktype.name + ') -> ' + self.knowledge.subject
 
 	def abuse_presentation(self):
-		return 'برچسب: ' + self.ktype.name + ' (' + self.knowledge.subject + ')'
+		return 'برچسب: ' + self.ktype.name + '-' + self.knowledge.subject
 
 	@staticmethod
 	def kdelete(id):
@@ -123,7 +123,7 @@ class InterknowledgeRelationship(models.Model):
 		       + self.fromKnowledge.subject + ' -> ' + self.toKnowledge.subject + ' )'
 
 	def abuse_presentation(self):
-		return 'رابطه: ' + self.ktype.name + ' (از ' + self.fromKnowledge.subject + ' به  ' + self.toKnowledge.subject + ')'
+		return 'رابطه: ' + self.ktype.name + ' |' + self.fromKnowledge.subject + '->' + self.toKnowledge.subject
 
 	@staticmethod
 	def kdelete(id):

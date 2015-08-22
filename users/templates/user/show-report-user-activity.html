@@ -2,8 +2,8 @@
 
 {% block content %}
 	<div class="">
-		<h2 class="h-title" dir="rtl">اخراج کاربر</h2>
-		<div id="dismiss-submit-message"></div>
+		<h2 class="h-title" dir="rtl">گزارش فعالیت کاربران</h2>
+		<div id="choose-submit-message"></div>
 		<table class="k-table table-selectable simple-part-margin">
 			<tr>
 				<th>نام کاربری</th>
@@ -24,15 +24,17 @@
 				</tr>
 			{% endfor %}
 		</table>
-		<button id="dismiss-but" type='submit' class="btn btn-info center-block text-center ">اخراج</button>
+		<button id="choose-but" type='submit' class="btn btn-info center-block text-center ">انتخاب</button>
 	</div>
+
+    <div id="report-result"></div>
 
 {% endblock %}
 
 {% block additional-script %}
 	<script>
-		$('#dismiss-but').on('click', function(e){
-			console.log('dismiss');
+		$('#choose-but').on('click', function(e){
+			console.log('report');
 			var ids = [];
 			$('tr.selected-row').each(function(idx, elem){
 				console.log('add element');
@@ -41,17 +43,12 @@
 			});
 			console.log('ids:');
 			console.log(ids);
-			$.post("{% url 'dismiss' %}", {'ids': JSON.stringify(ids)}, function(data){
-				console.log('receive dismiss response');
+			$.post("{% url 'show-report-user-activity' %}", {'ids': JSON.stringify(ids)}, function(data){
+				console.log('receive report response');
 				console.log(data);
-				$('#dismiss-submit-message').html(data['message']);
-				if(data['success']) {
-					setTimeout(function(){
-						console.log('reload page');
-						location.reload();
-					}, 5000);
-				}
-
+				if(data['success']){
+                   $('#report-result').html(data['result']);
+                }
 			});
 		});
 

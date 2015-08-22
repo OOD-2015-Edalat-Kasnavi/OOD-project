@@ -1,0 +1,18 @@
+{% load humanize %}
+<div class="">
+    <h2 class="h-title" dir="rtl">فعالیت کاربران</h2>
+    <table class="k-table simple-part-margin">
+        <tr>
+            <th style="width: 15%;">نام کاربری</th>
+            <th style="width: 70%;">فعالیت</th>
+            <th style="width: 15%;">تارخ</th>
+        </tr>
+        {% for log in logs %}
+            <tr>
+                <td style="width: 15%;">{{ log.user.user.username }}</td>
+                <td style="width: 70%;">{{ log.detail }}</td>
+                <td style="width: 15%;"><span dir="ltr">{{ log.createDate|naturaltime }}</span></td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>

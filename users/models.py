@@ -77,7 +77,7 @@ class Log(models.Model):
 	createDate = models.DateTimeField(default=datetime.now)
 
 	def __str__(self):
-		return 'Log: (' + str(self.createDate) + ') ' + self.user.username + ': ' + self.detail
+		return 'Log: (' + str(self.createDate) + ') ' + self.user.user.username + ': ' + self.detail
 
 	@staticmethod
 	def log_action(request, action):

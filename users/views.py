@@ -9,6 +9,7 @@ from users import kuser_auth
 from users.models import Log
 from users.forms import KUserForm, SpecialPrivilegeForm, ChangePassForm
 
+from django.template import Template, Context, loader
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse as urlReverse
@@ -161,6 +162,42 @@ def showDismissKUser(request):
 			kuser.fire()
 			Log.log_action(request,'کاربر ' + kuser.user.username + ' اخراج شد.')
 		return JsonResponse({'message': success_mes, 'success': True})
+
+	return None
+
+
+
+@login_required()
+@kuser_auth.manager_only_decorator
+def showReportUserActivity(request):
+	print('report user activity')
+	if request.method == 'GET':
+		kusers = users.models.KUser.objects.all()
+		print('send page for get method')
+		return render(request, 'user/show-report-user-activity.html', addUserInfoContext(request, {
+			'page_title': 'report user activity',
+			'kusers': kusers,
+		}))
+
+	elif request.method == 'POST':
+		print(request.POST)
+		ids = json.loads(request.POST['ids'])
+		print('ids:')
+		print(ids)
+		print(type(ids))
+		print('start get log')
+		logs = Log.objects.filter(user__pk__in=ids)
+		print(logs)
+		print('end get log')
+
+		context = {
+			'logs': logs,
+		}
+
+		t = loader.get_template('user/report-user-activity-result.html')
+		resp = t.render(context)
+
+		return JsonResponse({'result': resp, 'success': True})
 
 	return None
 

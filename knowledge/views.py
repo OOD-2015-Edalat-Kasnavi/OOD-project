@@ -162,7 +162,7 @@ def addTagAJ(request, knowledge_id):
 		tag.knowledge = kn
 		try:
 			tag.save()
-			Log.log_action(request,'برچسب ' + tag.abuse_presentation() + 'ساخته شد.')
+			Log.log_action(request,'' + tag.abuse_presentation() + ' ساخته شد.')
 			success = True
 		except:
 			success = False
