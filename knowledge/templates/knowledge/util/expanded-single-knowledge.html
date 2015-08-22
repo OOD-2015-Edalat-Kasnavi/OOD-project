@@ -94,16 +94,18 @@
 		{% endfor %}
 		<!-- <button class="btn btn-primary"></button> -->
 	</div>
-
+{{ user_rate }}<br/>
 	<hr class='block-part-divider'>
 	<div class="interact">
 		<div class="rate middle-wrap">
-			<a href="#" class="btn btn-sm btn-danger rate-down">
-				<span class="number">0</span>
+			<a href="{% url 'rate-knowledge' knowledge.id %}?vote=down" class="btn btn-sm btn-danger rate-down"
+                    {% if user_rate == 'down' %} disabled="True"{% endif %}>
+				<span class="number">{{ rate_down }}</span>
 				<span class="glyphicon glyphicon-thumbs-down"></span>
 			</a>
-			<a href="#" class="btn btn-sm btn-success rate-up">
-				<span class="number">0</span>
+			<a href="{% url 'rate-knowledge' knowledge.id %}?vote=up" class="btn btn-sm btn-success rate-up"
+                    {% if  user_rate == 'up'  %}disabled="True" {% endif %}>
+				<span class="number">{{ rate_up }}</span>
 				<span class="glyphicon glyphicon-thumbs-up"></span>
 			</a>
 		</div>

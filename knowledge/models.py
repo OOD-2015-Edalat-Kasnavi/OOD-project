@@ -43,7 +43,7 @@ class Rate(models.Model):
 		unique_together = ['voter', 'knowledge']
 
 	def __str__(self):
-		return str(self.Knowledge) + ' vote ' + ('up' if self.up else 'down') + ' by ' + str(self.v)
+		return str(self.knowledge) + ' vote ' + ('up' if self.up else 'down') + ' by ' + str(self.voter)
 
 
 ###################  Source  ###################

@@ -12,7 +12,8 @@ from django.template.loader import render_to_string
 from django.template import Template, Context, loader
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, JsonResponse, HttpResponse, HttpResponseForbidden
+from django.core.urlresolvers import reverse as urlReverse
+from django.http import Http404, JsonResponse, HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from knowledge.forms import SourceForm, KnowledgeForm, InterKnowledgeRelationshipForm, TagForm, RelationTypeForm, TagTypeForm
 
 
@@ -124,17 +125,58 @@ def showKnowledge(request, knowledge_id):
 	if user.privilege < kn.access:
 		return HttpResponseForbidden('access denied.')
 
-	add_relation_form = InterKnowledgeRelationshipForm()
-	add_tag_form = TagForm()
+	rate_up = knowledge.models.Rate.objects.filter(knowledge=kn, up=True).count()
+	rate_down = knowledge.models.Rate.objects.filter(knowledge=kn, up=False).count()
+	user_rate = ''
+	try:
+		rt = knowledge.models.Rate.objects.get(knowledge=kn, voter=user)
+		if rt and rt.up:
+			user_rate = 'up'
+		else:
+			user_rate = 'down'
+	except:
+		pass
+
 	print('show knowledge:')
 	print(kn)
 	Log.log_action(request, 'دانش ' + kn.subject + ' مشاهده شد.')
 	return render(request, 'knowledge/show-knowledge.html', addUserInfoContext(request, {
-		'page_title': kn.subject,
-		'knowledge': kn,
-		'add_relation_form': add_relation_form,
-		'add_tag_form': add_tag_form
+	'page_title': kn.subject,
+	'knowledge': kn,
+	'add_relation_form': InterKnowledgeRelationshipForm(),
+	'add_tag_form': TagForm(),
+	'rate_up': rate_up,
+	'rate_down': rate_down,
+	'user_rate': user_rate,
 	}))
+
+
+
+@login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_show_knowledge)
+def rateKnowledgeAJ(request, knowledge_id):
+	user = users.models.getKnowledgeUser(request.user)
+	kn = get_object_or_404(knowledge.models.Knowledge, pk=knowledge_id)
+
+	if user.privilege < kn.access:
+		return HttpResponseForbidden('access denied.')
+
+	try:
+		rate = knowledge.models.Rate.objects.get(knowledge=kn, voter=user)
+	except:
+		rate = knowledge.models.Rate()
+		rate.knowledge = kn
+		rate.voter = user
+	vote = request.GET['vote']
+	rate.up = (vote == 'up')
+	rate.save()
+
+	print('rate:')
+	print(rate)
+	Log.log_action(request, 'به دانش ' + kn.subject + ' رتبه داده شد.')
+
+
+	return HttpResponseRedirect(urlReverse('show-knowledge', kwargs={'knowledge_id': kn.id}))
 
 
 @login_required()

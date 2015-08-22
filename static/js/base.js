@@ -28,6 +28,7 @@ $('.interact .comment-send-but').on('click', function(event){
 			console.log(comments);
 			console.log(com);
 			comments.append(com);
+			location.reload();
 		},
 		error: function(data){
 			console.log('sending comment failed');

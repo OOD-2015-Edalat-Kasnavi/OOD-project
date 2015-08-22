@@ -36,5 +36,5 @@ class KnowledgeHtmlFactory(object):
 		if comment is None:
 			return ''
 
-		return '<div class="comment" dir="rtl"><a href="" class="comment-author" dir="rtl">'+comment.author.user.username+':</a>'\
+		return '<hr class="comment-part-divider"/><div class="comment" dir="rtl"><a href="" class="comment-author" dir="rtl">'+comment.author.user.username+':</a>'\
 		       +'<span class="comment-text"  dir="rtl">'+comment.text+'</span></div>'
