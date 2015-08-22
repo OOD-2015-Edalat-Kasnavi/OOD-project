@@ -1,5 +1,6 @@
 __author__ = 'kasra'
 import knowledge.models
+import users.models
 
 class SearchEngine:
 
@@ -13,7 +14,7 @@ class SearchEngine:
 	def searchUser(info):
 		name = info.get('name', '')
 		username = info.get('username', '')
-		return knowledge.models.KUser.objects.filter(user__username__icontains=username).filter(realName__icontains=name)
+		return users.models.KUser.objects.filter(user__username__icontains=username).filter(realName__icontains=name)
 
 	@staticmethod
 	def searchSource(info):

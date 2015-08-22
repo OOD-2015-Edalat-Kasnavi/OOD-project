@@ -34,6 +34,8 @@ def showAddKnowledge(request):
 			print('---- valid form')
 			kn = form.save(commit=False)
 			kn.author = user
+			if kn.access > user.privilege:
+				return HttpResponseForbidden('access denied.')
 			print('---- add author to knowledge :' + str(user))
 			success = True
 
@@ -47,7 +49,44 @@ def showAddKnowledge(request):
 	return render(request, 'knowledge/add-knowledge.html', addUserInfoContext(request, {
 		'page_title': 'Add knowledge',
 		'form': form,
-		'success': success
+		'success': success,
+		'action': 'افزودن',
+	}))
+
+
+@login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_add_knowledge)
+def showEditKnowledge(request, knowledge_id):
+	user = users.models.getKnowledgeUser(request.user)
+	kn = get_object_or_404(knowledge.models.Knowledge, pk=knowledge_id)
+	if user != kn.author:
+		return HttpResponseForbidden('access denied.')
+
+	success = False
+	if request.method == 'GET':
+		form = KnowledgeForm(instance=kn)
+	if request.method == 'POST':
+		form = KnowledgeForm(request.POST, request.FILES, instance=kn)
+		print('---- validating form')
+		if form.is_valid():
+			print(request.FILES)
+			print(request.POST)
+			print('---- valid form')
+			kn = form.save()
+			print('---- edit knowledge :' + str(kn))
+			success = True
+
+			Log.log_action(request, 'دانش ' + kn.subject + ' ویرایش شد.')
+
+		else :
+			print('---- invalid form')
+
+
+	return render(request, 'knowledge/add-knowledge.html', addUserInfoContext(request, {
+		'page_title': 'edit knowledge',
+		'form': form,
+		'success': success,
+		'action': 'ویرایش',
 	}))
 
 @login_required()
@@ -79,7 +118,12 @@ def showAddSource(request):
 @login_required()
 @kuser_auth.check_privilege_decorator(kuser_auth.access_show_knowledge)
 def showKnowledge(request, knowledge_id):
+	user = users.models.getKnowledgeUser(request.user)
 	kn = get_object_or_404(knowledge.models.Knowledge, pk=knowledge_id)
+
+	if user.privilege < kn.access:
+		return HttpResponseForbidden('access denied.')
+
 	add_relation_form = InterKnowledgeRelationshipForm()
 	add_tag_form = TagForm()
 	print('show knowledge:')
@@ -91,6 +135,7 @@ def showKnowledge(request, knowledge_id):
 		'add_relation_form': add_relation_form,
 		'add_tag_form': add_tag_form
 	}))
+
 
 @login_required()
 @kuser_auth.check_privilege_decorator(kuser_auth.access_show_source)
@@ -162,7 +207,7 @@ def addTagAJ(request, knowledge_id):
 		tag.knowledge = kn
 		try:
 			tag.save()
-			Log.log_action(request,'' + tag.abuse_presentation() + ' ساخته شد.')
+			Log.log_action(request, '' + tag.abuse_presentation() + ' ساخته شد.')
 			success = True
 		except:
 			success = False
@@ -303,6 +348,7 @@ def showAddTagType(request):
 @login_required()
 @kuser_auth.check_privilege_decorator(kuser_auth.access_report_abuse)
 def reportAbuseAj(request):
+	print('report abuse')
 	if request.method == 'GET':
 		raise Http404
 	if request.method == 'POST':
@@ -311,7 +357,12 @@ def reportAbuseAj(request):
 		reason = request.POST.dict().get('reason')
 		remove_id = request.POST.dict().get('remove_id')
 		remove_type = request.POST.dict().get('type')
+		print(request.POST.dict())
 		# print('abuse reported  name: ' + pres + ' url: ' + url + ' rem_id:' + str(remove_id) + ' t' + str(type(remove_id)) + ' rem_type:' + str(remove_type) + ' t' + str(type(remove_type)))
+		print('abuse reported  name: ' + pres + ' url: ' + url)
+		print(' rem_id:' + str(remove_id) )
+		print(' t' + str(type(remove_id)))
+		print(' rem_type:' + str(remove_type))
 
 		if (not pres) or (not url):
 			return HttpResponseForbidden('invalid request')
@@ -360,6 +411,23 @@ def removeRelationAj(request):
 
 		knowledge.models.InterknowledgeRelationship.objects.filter(pk=id).delete()
 		Log.log_action(request,'رابطه حذف شد.')
+		return HttpResponse('حذف با موفقیت انجام شد.')
+	return None
+
+
+
+@login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_remove_knowledge)
+@kuser_auth.manager_only_decorator
+def removeKnowledgeAj(request):
+	if request.method == 'GET':
+		raise Http404
+	if request.method == 'POST':
+		id = request.POST.dict().get('id')
+		print('remove knowledge id: ' + id)
+
+		knowledge.models.Knowledge.objects.filter(pk=id).delete()
+		Log.log_action(request,'دانش حذف شد.')
 		return HttpResponse('حذف با موفقیت انجام شد.')
 	return None
 

@@ -2,9 +2,18 @@
 
 <div class="single-block">
 	<div class="subject">
-		<h1>{{ knowledge.subject }}</h1>
-	</div>
 
+		<h1>
+            <a class='btn btn-link rep-abuse removable' data-abuse-name="دانش {{ knowledge.subject }}" data-abuse-url="{% url 'show-knowledge' knowledge.id %}"
+               data-remove-id="{{ knowledge.id }}" data-remove-url="{% url 'remove-knowledge' %}" data-type=0>
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </a>
+            {{ knowledge.subject }}
+            {% if request.user.id == knowledge.author.user.id %}
+              <a class="small" style="float: left" href="{% url 'edit-knowledge' knowledge.id %}">ویرایش</a>
+            {% endif %}
+        </h1>
+	</div>
 	{% if knowledge.summary %}
 		<hr class='block-part-divider'>
 		<div class="summary">
@@ -142,10 +151,7 @@
 				console.log('delete '+ id + ' url:' + url);
 				$.post(url, {'id':id}, function(data){
 
-					console.log('receive delete response');
-					console.log(data);
-					$target.parent().remove();
-					alert('حذف انجام شد')
+					location.reload()
 
 				});
 			});
@@ -163,14 +169,18 @@
 				var url = $target.attr('data-abuse-url');
 				var remove_id = $target.attr('data-remove-id');
 				var remove_type =  $target.attr('data-type');
-				console.log('request report abuse for '+pres + ' url:' + url);
-				$.post("{% url 'report-abuse' %}", {'name':pres, 'url':url, 'reason':reason, 'remove_id':remove_id, 'type':remove_type}, function(data){
-
-					console.log('receive abuse response');
-					console.log(data);
-					alert('درخواست با موفقیت ثبت شد.')
-
-				});
+                var send_data= JSON.stringify({'name':pres, 'url':url, 'reason':reason, 'remove_id':remove_id, 'type':remove_type});
+                console.log('request report abuse for '+pres + ' url:' + url);
+                console.log(send_data);
+                $('#abuse-reason-hidden').val(send_data);
+                $('#abuse-reason-modal').modal('show');
+{#				$.post("{% url 'report-abuse' %}",send_data, function(data){#}
+{##}
+{#					console.log('receive abuse response');#}
+{#					console.log(data);#}
+{#					alert('درخواست با موفقیت ثبت شد.')#}
+{##}
+{#				});#}
 			});
 		{% endif %}
 	</script>
