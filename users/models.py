@@ -62,12 +62,12 @@ class KUser(models.Model):
 def getKnowledgeUser(usr):
 	if isinstance(usr, AnonymousUser):
 		return None
-
 	if KUser.objects.filter(user__pk=usr.pk):
 		return KUser.objects.get(user__pk=usr.pk)
-
 	return None
 
+def getRequestKUser(request):
+	return getKnowledgeUser(request.user)
 
 
 ###################  Log  ###################
@@ -77,9 +77,15 @@ class Log(models.Model):
 	createDate = models.DateTimeField(default=datetime.now)
 
 	def __str__(self):
-		return 'Log: (' + self.createDate + ') '+ self.user.username + ': ' + self.detail
+		return 'Log: (' + str(self.createDate) + ') ' + self.user.username + ': ' + self.detail
 
-
+	@staticmethod
+	def log_action(request, action):
+		usr = getRequestKUser(request)
+		log = Log()
+		log.user = usr
+		log.detail = action
+		log.save()
 
 ###################  Request  ###################
 class KRequest(models.Model):

@@ -5,6 +5,8 @@ from itertools import chain
 import users.models
 import knowledge.models
 import knowledge.engine
+from users import kuser_auth
+from users.models import Log
 from users.forms import KUserForm, SpecialPrivilegeForm, ChangePassForm
 
 from django.shortcuts import render, get_object_or_404
@@ -12,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse as urlReverse
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, Http404, JsonResponse
+
 
 def loginView(request):
 	if request.method == 'GET':
@@ -58,6 +61,8 @@ def addUserInfoContext(request, context):
 
 	context['user_realname'] = user.realName
 	context['user_is_manager'] = user.isManager
+	context['kauth_access_add_tag'] = user.privilege >= kuser_auth.access_add_tag
+	context['kauth_access_add_relation'] = user.privilege >= kuser_auth.access_add_relation
 	return context
 
 
@@ -73,6 +78,7 @@ def baseView(request):
 
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_show_user)
 def userProfileView(request, user_id):
 	usr = get_object_or_404(users.models.KUser, pk=user_id)
 	print('show user profile')
@@ -84,6 +90,7 @@ def userProfileView(request, user_id):
 
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_search_user)
 def searchUser(request):
 	print('search user')
 	if request.method == 'POST':
@@ -98,6 +105,7 @@ def searchUser(request):
 
 
 @login_required()
+@kuser_auth.manager_only_decorator
 def showRegisterKUser(request):
 	success = False
 	if request.method == 'GET':
@@ -111,6 +119,7 @@ def showRegisterKUser(request):
 				print('register user for')
 				form.save()
 				print('form saved')
+				Log.log_action(request,'کاربر جدید ساخنه شد.')
 				success = True
 			except :
 				print("Unexpected error:", sys.exc_info()[0])
@@ -128,6 +137,7 @@ def showRegisterKUser(request):
 
 
 @login_required()
+@kuser_auth.manager_only_decorator
 def showDismissKUser(request):
 	print('dismiss users')
 	if request.method == 'GET':
@@ -149,6 +159,7 @@ def showDismissKUser(request):
 		print(kusers)
 		for kuser in kusers:
 			kuser.fire()
+			Log.log_action(request,'کاربر ' + kuser.user.username + ' اخراج شد.')
 		return JsonResponse({'message': success_mes, 'success': True})
 
 	return None
@@ -170,6 +181,7 @@ def showSpecialprivilageRequest(request):
 			mod.url = urlReverse('show-user-profile', kwargs={'user_id': kuser.id})
 			mod.save()
 			success = True
+			Log.log_action(request,'درخواست دسترسی ویژه ثبت شد.')
 
 		else :
 			print('---- invalid form')
@@ -184,6 +196,7 @@ def showSpecialprivilageRequest(request):
 
 
 @login_required()
+@kuser_auth.manager_only_decorator
 def showRequestManager(request):
 	message = ''
 	if request.method == 'GET':

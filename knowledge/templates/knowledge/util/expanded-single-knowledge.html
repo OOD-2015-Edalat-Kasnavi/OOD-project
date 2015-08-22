@@ -40,7 +40,7 @@
 
 	<hr class='block-part-divider'>
 	<div class="control-panel-relation">
-		<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add-relation">افزودن رابطه</button>
+		<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#add-relation" {% if kauth_access_add_relation == 0 %}disabled="True" {% endif %}>افزودن رابطه</button>
 
 		{% for rel in knowledge.relationToKnowledge.all %}
 			<div class='btn-group rel-but'>
@@ -71,7 +71,7 @@
 	</div>
 	<hr class='block-part-divider'>
 	<div class="control-panel-tag">
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-tag">افزودن برچسب</button>
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-tag" {% if kauth_access_add_tag == 0 %}disabled="True" {% endif %}>افزودن برچسب</button>
 		
 		{% for tag in knowledge.tags.all %}
 			<div class='btn-group tag-but'>

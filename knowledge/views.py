@@ -3,6 +3,8 @@ from datetime import datetime
 import users.models
 import knowledge.models
 import knowledge.engine
+from users import kuser_auth
+from users.models import Log
 from users.views import addUserInfoContext
 from knowledge.factory import KnowledgeHtmlFactory
 
@@ -13,9 +15,11 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404, JsonResponse, HttpResponse, HttpResponseForbidden
 from knowledge.forms import SourceForm, KnowledgeForm, InterKnowledgeRelationshipForm, TagForm, RelationTypeForm, TagTypeForm
 
-# Create your views here.
+
+
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_add_knowledge)
 def showAddKnowledge(request):
 	user = users.models.getKnowledgeUser(request.user)
 	success = False
@@ -28,12 +32,13 @@ def showAddKnowledge(request):
 			print(request.FILES)
 			print(request.POST)
 			print('---- valid form')
-			mod = form.save(commit=False)
-			mod.author = user
+			kn = form.save(commit=False)
+			kn.author = user
 			print('---- add author to knowledge :' + str(user))
 			success = True
 
-			mod.save()
+			kn.save()
+			Log.log_action(request, 'دانش ' + kn.subject + ' ساخته شد.')
 
 		else :
 			print('---- invalid form')
@@ -46,6 +51,7 @@ def showAddKnowledge(request):
 	}))
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_add_source)
 def showAddSource(request):
 	success = False
 	if request.method == 'GET':
@@ -55,8 +61,9 @@ def showAddSource(request):
 		print('---- validating form')
 		if form.is_valid():
 			print('---- valid form')
-			mod = form.save()
+			sc = form.save()
 			success = True
+			Log.log_action(request, 'منبع ' + sc.subject + ' ساخنه شد.')
 
 		else :
 			print('---- invalid form')
@@ -70,12 +77,14 @@ def showAddSource(request):
 
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_show_knowledge)
 def showKnowledge(request, knowledge_id):
 	kn = get_object_or_404(knowledge.models.Knowledge, pk=knowledge_id)
 	add_relation_form = InterKnowledgeRelationshipForm()
 	add_tag_form = TagForm()
 	print('show knowledge:')
 	print(kn)
+	Log.log_action(request, 'دانش ' + kn.subject + ' مشاهده شد.')
 	return render(request, 'knowledge/show-knowledge.html', addUserInfoContext(request, {
 		'page_title': kn.subject,
 		'knowledge': kn,
@@ -84,10 +93,12 @@ def showKnowledge(request, knowledge_id):
 	}))
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_show_source)
 def showSource(request, source_id):
 	src = get_object_or_404(knowledge.models.Source, pk=source_id)
 	print('show source: ')
 	print(src)
+	Log.log_action(request, 'منبع ' + src.subject + ' مشاهده شد.')
 	return render(request, 'knowledge/show-source.html', addUserInfoContext(request, {
 		'page_title': src.subject,
 		'source': src,
@@ -95,6 +106,7 @@ def showSource(request, source_id):
 
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_add_relation)
 def addRelationAJ(request, knowledge_id):
 	print('add relationship AJ')
 	if request.method == 'GET':
@@ -109,6 +121,7 @@ def addRelationAJ(request, knowledge_id):
 	if add_relation_form.is_valid():
 		print('---- valid form')
 		relation = add_relation_form.save()
+		Log.log_action(request,'رابطه ' + relation.presentation() + ' ساخته شد.')
 		success = True
 	else :
 		print('---- invalid form')
@@ -131,6 +144,7 @@ def addRelationAJ(request, knowledge_id):
 
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_add_tag)
 def addTagAJ(request, knowledge_id):
 	print('add tag AJ')
 	if request.method == 'GET':
@@ -146,8 +160,9 @@ def addTagAJ(request, knowledge_id):
 		print('---- valid form')
 		tag = add_tag_form.save(commit=False)
 		tag.knowledge = kn
-		try :
+		try:
 			tag.save()
+			Log.log_action(request,'برچسب ' + tag.abuse_presentation() + 'ساخته شد.')
 			success = True
 		except:
 			success = False
@@ -174,6 +189,7 @@ def addTagAJ(request, knowledge_id):
 
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_comment)
 def addCommentAJ(request, knowledge_id):
 	print('add comment AJ')
 	if request.method == 'GET':
@@ -193,12 +209,15 @@ def addCommentAJ(request, knowledge_id):
 	comment.date = time
 	comment.save()
 
+	Log.log_action(request,'ببه دانش ' + kn.subject + ' نظر داده شد.')
+
 	return JsonResponse({
 		'comment': KnowledgeHtmlFactory.CommentFactory(comment),
 	})
 
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_search_knowledge)
 def showSearchKnowledge(request):
 	print('search knowledge')
 	if request.method == 'POST':
@@ -214,6 +233,7 @@ def showSearchKnowledge(request):
 
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_search_source)
 def showSearchSource(request):
 	print('search source')
 	if request.method == 'POST':
@@ -229,6 +249,8 @@ def showSearchSource(request):
 
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_add_relation_type)
+@kuser_auth.manager_only_decorator
 def showAddRelationType(request):
 	success = False
 	if request.method == 'GET':
@@ -238,8 +260,9 @@ def showAddRelationType(request):
 		print('---- validating form')
 		if form.is_valid():
 			print('---- valid form')
-			mod = form.save()
+			rel = form.save()
 			success = True
+			Log.log_action(request,'نوع رابطه ی ' + rel.abuse_presentation() + ' ساخته شد.')
 		else :
 			print('---- invalid form')
 
@@ -252,6 +275,7 @@ def showAddRelationType(request):
 
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_add_tag_type)
 def showAddTagType(request):
 	success = False
 	if request.method == 'GET':
@@ -261,8 +285,9 @@ def showAddTagType(request):
 		print('---- validating form')
 		if form.is_valid():
 			print('---- valid form')
-			mod = form.save()
+			tag = form.save()
 			success = True
+			Log.log_action(request,'نوع برچسب ' + tag.abuse_presentation() + ' ساخته شد.')
 		else :
 			print('---- invalid form')
 
@@ -276,6 +301,7 @@ def showAddTagType(request):
 
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_report_abuse)
 def reportAbuseAj(request):
 	if request.method == 'GET':
 		raise Http404
@@ -297,6 +323,7 @@ def reportAbuseAj(request):
 		abuse.url = url
 		abuse.reason = reason
 		abuse.save()
+		Log.log_action(request,'درخواست استفاده نادرست ثبت شد.')
 		print('abuse reported')
 		print(abuse)
 		return HttpResponse(' درخواست با موفقیت ثبت شد.')
@@ -305,6 +332,8 @@ def reportAbuseAj(request):
 
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_remove_tag)
+@kuser_auth.manager_only_decorator
 def removeTagAj(request):
 	if request.method == 'GET':
 		raise Http404
@@ -313,11 +342,15 @@ def removeTagAj(request):
 		print('remove tag id: ' + id)
 
 		knowledge.models.Tag.objects.filter(pk=id).delete()
+
+		Log.log_action(request,'برچسب حذف شد.')
 		return HttpResponse('حذف با موفقیت انجام شد.')
 	return None
 
 
 @login_required()
+@kuser_auth.check_privilege_decorator(kuser_auth.access_remove_relation)
+@kuser_auth.manager_only_decorator
 def removeRelationAj(request):
 	if request.method == 'GET':
 		raise Http404
@@ -326,6 +359,7 @@ def removeRelationAj(request):
 		print('remove tag id: ' + id)
 
 		knowledge.models.InterknowledgeRelationship.objects.filter(pk=id).delete()
+		Log.log_action(request,'رابطه حذف شد.')
 		return HttpResponse('حذف با موفقیت انجام شد.')
 	return None
 
