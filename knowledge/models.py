@@ -27,6 +27,16 @@ class Knowledge(models.Model):
 	def presentation(self):
 		return self.subject
 
+	def rate(self, kuser, vote):
+		try:
+			rate = Rate.objects.get(knowledge=self, voter=kuser)
+		except:
+			rate = Rate()
+			rate.knowledge = self
+			rate.voter = kuser
+		rate.up = vote
+		rate.save()
+
 	@staticmethod
 	def kdelete(id):
 		print('remove knowledge :' + repr(id))
@@ -122,7 +132,7 @@ class InterknowledgeRelationship(models.Model):
 		       + self.fromKnowledge.subject + ' -> ' + self.toKnowledge.subject + ' )'
 
 	def abuse_presentation(self):
-		return 'رابطه: ' + self.ktype.name + ' |' + self.fromKnowledge.subject + '->' + self.toKnowledge.subject
+		return 'رابطه: ' + self.ktype.name + ' از ' + self.fromKnowledge.subject + ' به ' + self.toKnowledge.subject
 
 	@staticmethod
 	def kdelete(id):

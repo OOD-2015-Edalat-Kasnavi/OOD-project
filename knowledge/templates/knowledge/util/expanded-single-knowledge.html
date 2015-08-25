@@ -4,7 +4,7 @@
 	<div class="subject">
 
 		<h1>
-            <a class='btn btn-link rep-abuse removable' data-abuse-name="دانش {{ knowledge.subject }}" data-abuse-url="{% url 'show-knowledge' knowledge.id %}"
+            <a class='btn btn-link rep-abuse removable' data-abuse-name="دانش {{ knowledge.subject }} " data-abuse-url="{% url 'show-knowledge' knowledge.id %}"
                data-remove-id="{{ knowledge.id }}" data-remove-url="{% url 'remove-knowledge' %}" data-type=0>
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </a>
@@ -94,7 +94,6 @@
 		{% endfor %}
 		<!-- <button class="btn btn-primary"></button> -->
 	</div>
-{{ user_rate }}<br/>
 	<hr class='block-part-divider'>
 	<div class="interact">
 		<div class="rate middle-wrap">

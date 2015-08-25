@@ -161,18 +161,20 @@ def rateKnowledgeAJ(request, knowledge_id):
 	if user.privilege < kn.access:
 		return HttpResponseForbidden('access denied.')
 
-	try:
-		rate = knowledge.models.Rate.objects.get(knowledge=kn, voter=user)
-	except:
-		rate = knowledge.models.Rate()
-		rate.knowledge = kn
-		rate.voter = user
 	vote = request.GET['vote']
-	rate.up = (vote == 'up')
-	rate.save()
-
-	print('rate:')
-	print(rate)
+	kn.rate(user, (vote == 'up'))
+	# try:
+	# 	rate = knowledge.models.Rate.objects.get(knowledge=kn, voter=user)
+	# except:
+	# 	rate = knowledge.models.Rate()
+	# 	rate.knowledge = kn
+	# 	rate.voter = user
+	#
+	# rate.up =
+	# rate.save()
+	#
+	# print('rate:')
+	# print(rate)
 	Log.log_action(request, 'به دانش ' + kn.subject + ' رتبه داده شد.')
 
 

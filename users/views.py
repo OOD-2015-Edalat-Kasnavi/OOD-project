@@ -6,7 +6,7 @@ import users.models
 import knowledge.models
 import knowledge.engine
 from users import kuser_auth
-from users.models import Log
+from users.models import Log, getRequestKUser
 from users.forms import KUserForm, SpecialPrivilegeForm, ChangePassForm
 
 from django.template import Template, Context, loader
@@ -31,7 +31,7 @@ def loginView(request):
 			nextUrl = request.GET.get('next', baseUrl)
 			login(request, user)
 			print('---- login user: ' + str(user) + ' redirect to ' + nextUrl)
-
+			Log.log_action(request, "ورود به سامانه")
 			return HttpResponseRedirect(nextUrl)
 
 		else:
@@ -98,6 +98,7 @@ def searchUser(request):
 		raise Http404
 
 	kusers = knowledge.engine.SearchEngine.searchUser(request.GET)
+	Log.log_action(request, "جستجوی کاربران")
 
 	return render(request, 'user/search-user.html', addUserInfoContext(request, {
 		'page_title': 'Search user',
@@ -158,6 +159,11 @@ def showDismissKUser(request):
 		print(type(ids))
 		kusers = users.models.KUser.objects.filter(pk__in=ids)
 		print(kusers)
+		man = getRequestKUser(request)
+		for kuser in kusers:
+			if kuser.privilege > man.privilege:
+				print('insufficient access')
+				return JsonResponse({'message': '<div class="form-error">دسترسی مجاز نیست.</div>', 'success': False})
 		for kuser in kusers:
 			kuser.fire()
 			Log.log_action(request,'کاربر ' + kuser.user.username + ' اخراج شد.')
@@ -181,7 +187,7 @@ def showReportUserActivity(request):
 
 	elif request.method == 'POST':
 		logs = knowledge.engine.ReportEngine.reportUserActivity(request.POST)
-
+		Log.log_action(request, 'درخواست گزارش فعالیت کارمندان')
 		context = {
 			'logs': logs,
 		}
