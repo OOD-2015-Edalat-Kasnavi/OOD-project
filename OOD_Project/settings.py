@@ -112,5 +112,5 @@ STATICFILES_DIRS = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-import OOD_Project.init
-OOD_Project.init.initialize()
+import OOD_Project.initialize
+OOD_Project.initialize.initialize()

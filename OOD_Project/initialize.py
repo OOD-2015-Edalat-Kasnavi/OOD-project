@@ -3,9 +3,9 @@ import users.models
 from django.contrib.auth.models import User
 
 def initialize():
-	print('check admin')
-	if User.objects.filter(username='admin').count() == 0:
-		try:
+	try:
+		print('check admin')
+		if User.objects.filter(username='admin').count() == 0:
 			print('create admin')
 			usr = User.objects.create_superuser('admin', '', 'admin')
 			kuser = users.models.KUser()
@@ -18,5 +18,5 @@ def initialize():
 			kuser.gender = 'M'
 			print(kuser)
 			kuser.save()
-		except:
-			pass
+	except:
+		pass
