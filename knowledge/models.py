@@ -22,7 +22,7 @@ class Knowledge(models.Model):
 	file = models.FileField(blank=True, null=True, upload_to=knowledge_file_name)
 
 	def __str__(self):
-		return 'Knowledge: ' + self.subject
+		return '' + self.subject
 
 	def presentation(self):
 		return self.subject
@@ -82,7 +82,7 @@ class TagType(models.Model):
 	name = models.CharField(max_length=255, unique=True,error_messages={'unique':'نوع برچسب برای این مبحث موجود است.'})
 
 	def __str__(self):
-		return 'TagType: ' + self.name
+		return '' + self.name
 
 	def presentation(self):
 		return self.name
@@ -113,7 +113,7 @@ class InterknowledgeRelationshipType(models.Model):
 	name = models.CharField(max_length=255, unique=True,error_messages={'unique':'نوع رابطه برای این مبحث موجود است.'})
 
 	def __str__(self):
-		return 'RelationshipType: ' + self.name
+		return '' + self.name
 
 	def presentation(self):
 		return self.name

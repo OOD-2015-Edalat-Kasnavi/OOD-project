@@ -210,7 +210,7 @@ def addRelationAJ(request, knowledge_id):
 	if add_relation_form.is_valid():
 		print('---- valid form')
 		relation = add_relation_form.save()
-		Log.log_action(request,'رابطه ' + relation.presentation() + ' ساخته شد.')
+		Log.log_action(request,'رابطه ' + relation.abuse_presentation() + ' ساخته شد.')
 		success = True
 	else :
 		print('---- invalid form')
@@ -349,9 +349,9 @@ def showAddRelationType(request):
 		print('---- validating form')
 		if form.is_valid():
 			print('---- valid form')
-			rel = form.save()
+			relt = form.save()
 			success = True
-			Log.log_action(request,'نوع رابطه ی ' + rel.abuse_presentation() + ' ساخته شد.')
+			Log.log_action(request,'نوع رابطه ی ' + relt.presentation() + ' ساخته شد.')
 		else :
 			print('---- invalid form')
 
@@ -374,9 +374,9 @@ def showAddTagType(request):
 		print('---- validating form')
 		if form.is_valid():
 			print('---- valid form')
-			tag = form.save()
+			tagt = form.save()
 			success = True
-			Log.log_action(request,'نوع برچسب ' + tag.abuse_presentation() + ' ساخته شد.')
+			Log.log_action(request,'نوع برچسب ' + tagt.presentation() + ' ساخته شد.')
 		else :
 			print('---- invalid form')
 

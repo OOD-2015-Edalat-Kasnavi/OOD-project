@@ -11,7 +11,7 @@ def emptyFunc():
 urlpatterns = [
     url(r'^source/add/$', knowledge.views.showAddSource, name='add-source'),
     url(r'^knowledge/add/$', knowledge.views.showAddKnowledge, name='add-knowledge'),
-    url(r'^tag-type/add/$', knowledge.views.showAddRelationType, name='add-tag-type'),
+    url(r'^tag-type/add/$', knowledge.views.showAddTagType, name='add-tag-type'),
     url(r'^relation-type/add/$', knowledge.views.showAddRelationType, name='add-relation-type'),
     url(r'^tag/remove/$', knowledge.views.removeTagAj, name='remove-tag'),
     url(r'^relation/remove/$', knowledge.views.removeRelationAj, name='remove-relation'),
@@ -29,7 +29,5 @@ urlpatterns = [
     url(r'^report-abuse/$', knowledge.views.reportAbuseAj, name='report-abuse'),
 
 
-    url(r'^relation-type/(?P<relation_id>\d+)/$', emptyFunc, name='show-relation-type'),
-    url(r'^tag-type/(?P<tag_id>\d+)/$', emptyFunc, name='show-tag-type'),
 
 ]
