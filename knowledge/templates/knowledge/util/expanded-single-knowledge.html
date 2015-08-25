@@ -55,7 +55,7 @@
 			<div class='btn-group rel-but'>
 				<!-- todo add  link -->
 				<a class='btn btn-sm btn-success' href="{% url 'show-knowledge' rel.toKnowledge.id %}">{{ rel.toKnowledge.presentation }}</a>
-				<a class='btn btn-sm btn-success' href="{% url 'show-relation-type' rel.ktype.id %}">{{ rel.ktype.presentation }}</a>
+				<a class='btn btn-sm btn-success' >{{ rel.ktype.presentation }}</a>
 				<a class='btn btn-sm btn-success rep-abuse removable' data-abuse-name="{{ rel.abuse_presentation }}" data-abuse-url="{% url 'show-knowledge' knowledge.id %}"
 				   data-remove-id="{{ rel.id }}" data-remove-url="{% url 'remove-relation' %}" data-type=2>
 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -67,7 +67,7 @@
 			<div class='btn-group rel-but'>
 				<!-- todo add  link -->
 				<a class='btn btn-sm btn-warning' href="{% url 'show-knowledge' rel.fromKnowledge.id %}">{{ rel.fromKnowledge.presentation }}</a>
-				<a class='btn btn-sm btn-warning' href="{% url 'show-relation-type' rel.ktype.id %}">{{ rel.ktype.presentation }}</a>
+				<a class='btn btn-sm btn-warning'>{{ rel.ktype.presentation }}</a>
 				<a class='btn btn-sm btn-warning rep-abuse removable' data-abuse-name="{{ rel.abuse_presentation }}" data-abuse-url="{% url 'show-knowledge' knowledge.id %}"
 				   data-remove-id="{{ rel.id }}" data-remove-url="{% url 'remove-relation' %}" data-type=2>
 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -85,7 +85,7 @@
 		{% for tag in knowledge.tags.all %}
 			<div class='btn-group tag-but'>
 				<!-- todo add  link -->
-				<a class='btn btn-info' href="{% url 'show-tag-type' tag.ktype.id %}">{{ tag.ktype.presentation }}</a>
+				<a class='btn btn-info' >{{ tag.ktype.presentation }}</a>
 				<a class='btn btn-info rep-abuse removable' data-abuse-name="{{ tag.abuse_presentation }}" data-abuse-url="{% url 'show-knowledge' knowledge.id %}"
 				   data-remove-id="{{ tag.id }}" data-remove-url="{% url 'remove-tag' %}" data-type=1>
 					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
