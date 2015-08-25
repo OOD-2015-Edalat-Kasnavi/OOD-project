@@ -4,7 +4,6 @@ import users.models
 from django.db import models
 
 
-defaultAccessForKnowledge = 50
 
 def knowledge_file_name(instance, filename):
 	return '/'.join(['file', instance.author.user.username, filename])
@@ -16,7 +15,7 @@ class Knowledge(models.Model):
 	author = models.ForeignKey('users.KUser', related_name='knowledge')
 	summary = models.CharField(max_length=255, blank=True, null=True)
 	gainWay = models.TextField(blank=True, null=True)
-	access = models.IntegerField(default=defaultAccessForKnowledge)
+	access = models.IntegerField(default=0)
 	createDate = models.DateTimeField(default=datetime.now)
 
 	content = models.TextField(blank=True, null=True)
@@ -53,7 +52,7 @@ class Source(models.Model):
 	createDate = models.DateTimeField(default=datetime.now)
 
 	def __str__(self):
-		return 'Source: ' + self.subject
+		return self.subject
 
 	def presentation(self):
 		return self.subject

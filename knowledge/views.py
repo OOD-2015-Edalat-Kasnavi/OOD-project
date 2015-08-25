@@ -141,13 +141,13 @@ def showKnowledge(request, knowledge_id):
 	print(kn)
 	Log.log_action(request, 'دانش ' + kn.subject + ' مشاهده شد.')
 	return render(request, 'knowledge/show-knowledge.html', addUserInfoContext(request, {
-	'page_title': kn.subject,
-	'knowledge': kn,
-	'add_relation_form': InterKnowledgeRelationshipForm(),
-	'add_tag_form': TagForm(),
-	'rate_up': rate_up,
-	'rate_down': rate_down,
-	'user_rate': user_rate,
+		'page_title': kn.subject,
+		'knowledge': kn,
+		'add_relation_form': InterKnowledgeRelationshipForm(),
+		'add_tag_form': TagForm(),
+		'rate_up': rate_up,
+		'rate_down': rate_down,
+		'user_rate': user_rate,
 	}))
 
 

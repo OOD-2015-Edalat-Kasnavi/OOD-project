@@ -1,6 +1,8 @@
 __author__ = 'kasra'
-import knowledge.models
+import json
+
 import users.models
+import knowledge.models
 
 class SearchEngine:
 
@@ -20,3 +22,15 @@ class SearchEngine:
 	def searchSource(info):
 		sub = info.get('subject', '')
 		return knowledge.models.Source.objects.filter(subject__icontains=sub)
+
+
+class ReportEngine():
+
+	@staticmethod
+	def reportUserActivity(info):
+		ids = json.loads(info['ids'])
+		print('ids:')
+		print(ids)
+		logs = users.models.Log.objects.filter(user__pk__in=ids)
+		print(logs)
+		return logs

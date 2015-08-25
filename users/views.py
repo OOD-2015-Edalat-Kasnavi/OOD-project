@@ -180,20 +180,11 @@ def showReportUserActivity(request):
 		}))
 
 	elif request.method == 'POST':
-		print(request.POST)
-		ids = json.loads(request.POST['ids'])
-		print('ids:')
-		print(ids)
-		print(type(ids))
-		print('start get log')
-		logs = Log.objects.filter(user__pk__in=ids)
-		print(logs)
-		print('end get log')
+		logs = knowledge.engine.ReportEngine.reportUserActivity(request.POST)
 
 		context = {
 			'logs': logs,
 		}
-
 		t = loader.get_template('user/report-user-activity-result.html')
 		resp = t.render(context)
 

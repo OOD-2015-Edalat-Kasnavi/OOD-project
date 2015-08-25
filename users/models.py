@@ -95,6 +95,7 @@ class KRequest(models.Model):
 	reason = models.TextField(blank=True, null=True)
 	url = models.CharField(max_length=255)
 
+
 	def getReason(self):
 		return self.reason if self.reason else 'دلیل ذکر نشده است.'
 
